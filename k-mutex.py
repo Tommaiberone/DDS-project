@@ -2,6 +2,7 @@ import threading
 #import tcp
 import queue
 import pymq
+import random
 
 pymq.init(RedisConfig())
 
@@ -10,16 +11,41 @@ N = 10
 
 q = queue.Queue()
 
-threads[N]
-resources = [K]
+class TimeServer:
 
-class TimeServer():
-	bus
+	threads[N]
+	resources = [K]
 	
+	def __init__(self, bus: EventBus):
+		self.bus = bus
+		self.bus.subscribe(self.handle_message)
 
+	def start_threads():
+		for i in range(N):
+			print("pluto")
+			threads[i] = threading.Thread(target=Thread.thread_function, args=(i,))
 
+	def timed_countdown():
+		
+		while True:
 
-class Msg(NamedTuple):
+			timeout = random.randint(0,10)
+			random_process = random.randint(0, N-1)
+
+			sleep(timeout)
+			
+			#Quando scade manda un messaggio ad un processo random di entrare in cs
+
+			msg = Msg()
+			msg.kind = "GO"
+			mit = 0
+			dest = random_process
+			seq = 0
+			num_rep = 0
+
+			self.bus.publish(msg)
+
+class Msg:
 	
 	kind : str
 	mit : int
@@ -36,6 +62,8 @@ class Thread:
 	maxseq : int
 	def_c: int[N]
 	rep_c: int[N]
+
+	def thread_function():
 	
 	def __init__(self,bus: EventBus,pid: int):
 		
@@ -46,11 +74,7 @@ class Thread:
 		self.maxseq = 0
 		self.bus = bus
 		
-		self.bus.subscribe(self.handle_message)
-		
-	
-	
-	
+		self.bus.subscribe(self.handle_message)	
 	
 	def handle_message(self,message : Msg):
 		
@@ -64,12 +88,16 @@ class Thread:
 					send(self,"REPLY",self.pid,message.mit,self.maxseq,self.def_c[message.mit])
 					
 				
-			if message.kind == "REPLY":
+			elif message.kind == "REPLY":
 				rep_c[message.mit] -= message.num_rep
 				if self.req_cs and not_in_cs() >= N-K:
 					self.req_cs = False
 					self.cs = True
-					do_cs_stuff()					
+					do_cs_stuff()
+
+			elif message.kind == "GO"
+				send(self,"REPLY",self.pid,message.mit,self.maxseq,self.def_c[message.mit])
+
 			
 	
 	
@@ -96,17 +124,12 @@ class Thread:
 		for i in range(0,34):
 			print(self.pid+"\n")
 
-def start_threads():
-	for i in range(N):
-		print("pluto")
-		threads[i] = threading.Thread(target=thread_function)
-
-def thread_function():
-
-
-
 
 def main():
 	#start threads
-	start_threads()
+	TimeServer.start_threads()
+	TimeServer.timed_countdown()
+
+
+
 	
