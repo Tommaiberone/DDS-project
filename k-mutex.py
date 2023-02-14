@@ -2,28 +2,29 @@ import threading
 #import tcp
 import queue
 import pymq
+from pymq import EventBus
+from pymq.provider.redis import RedisConfig
 import random
-
-pymq.init(RedisConfig())
 
 K = 5
 N = 10
+BROADCAST = 1899
 
 q = queue.Queue()
 
 class TimeServer:
 
-	threads[N]
+	threads = [N]
 	resources = [K]
 	
 	def __init__(self, bus: EventBus):
 		self.bus = bus
 		self.bus.subscribe(self.handle_message)
 
-	def start_threads():
+	def start_threads(bus):
 		for i in range(N):
 			print("pluto")
-			threads[i] = threading.Thread(target=Thread.thread_function, args=(i,))
+			threads[i] = threading.Thread(target = thread_function, args=(i, bus))
 
 	def timed_countdown():
 		
@@ -61,9 +62,7 @@ class Thread:
 	seq : int
 	maxseq : int
 	def_c: int[N]
-	rep_c: int[N]
-
-	def thread_function():
+	reply_count: int[N]
 	
 	def __init__(self,bus: EventBus,pid: int):
 		
@@ -78,7 +77,7 @@ class Thread:
 	
 	def handle_message(self,message : Msg):
 		
-		if message.dest == self.pid:
+		if message.dest == self.pid or message.dest == BROADCAST:
 			
 			if message.kind == "REQ":
 				self.maxseq = max(maxseq,message.seq)
@@ -89,25 +88,26 @@ class Thread:
 					
 				
 			elif message.kind == "REPLY":
-				rep_c[message.mit] -= message.num_rep
+				reply_count[message.mit] -= message.num_rep
 				if self.req_cs and not_in_cs() >= N-K:
 					self.req_cs = False
 					self.cs = True
 					do_cs_stuff()
 
-			elif message.kind == "GO"
-				send(self,"REPLY",self.pid,message.mit,self.maxseq,self.def_c[message.mit])
+			elif message.kind == "GO":
+				self.cs == True
+				self.maxseq += 1
+				send(self,"REQ",self.pid, BROADCAST, self.maxseq, 0)
+				for elem in reply_count:
+					reply_count += 1
+
 
 			
-	
-	
-	def send(self,kind :str,mit :int,dest : int, seq : int,num : int):
+	def send(self,kind :str,mit :int,dest : int, seq : int, num : int):
 		m=Msg()
 		m.kind = kind
 		m.mit = mit
-		m.dest = dest
-		if kind == "REQ":
-			self.maxseq +=1
+		m.dest = dest			
 		m.seq = self.maxseq
 		m.num = num
 		self.bus.publish(m)
@@ -116,7 +116,7 @@ class Thread:
 	def not_in_cs():
 		c = 0
 		for i in range(0,N):
-			if i != self.pid and rep_c[i] == 0:
+			if i != self.pid and reply_count[i] == 0:
 				c+=1
 		return c
 		
@@ -125,11 +125,16 @@ class Thread:
 			print(self.pid+"\n")
 
 
+def thread_function(pid, bus):
+	thread = Thread(pid, bus)
+
+
 def main():
 	#start threads
-	TimeServer.start_threads()
+	bus = pymq.init(RedisConfig())
+	TimeServer.start_threads(bus)
 	TimeServer.timed_countdown()
 
-
-
+if __name__ == '__main__':
+    main()
 	
