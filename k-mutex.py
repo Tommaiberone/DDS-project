@@ -5,27 +5,48 @@ import pymq
 from pymq import EventBus
 from pymq.provider.redis import RedisConfig
 import random
+import time
+
 
 K = 5
 N = 10
 BROADCAST = 1899
+threads = [0]*N
 
-q = queue.Queue()
+#q = queue.Queue()
+
+
+class Msg:
+	
+	kind : str
+	mit : int
+	dest: int
+	seq : int
+	num_rep : int
 
 class TimeServer:
-
-	threads = [N]
-	resources = [K]
+	
+	bus : EventBus
+	threads = [0]*N
+	resources = [0]*K
+	
+	def handle_message(self,message : Msg):
+		return
+	
 	
 	def __init__(self, bus: EventBus):
 		self.bus = bus
+		print("topolino")
 		self.bus.subscribe(self.handle_message)
+		print("minni")
 
-	def start_threads(bus):
+	def start_threads(self,bus):
 		for i in range(N):
 			print("pluto")
 			threads[i] = threading.Thread(target = thread_function, args=(i, bus))
-
+		#self.bus.subscribe(self.handle_message)
+	
+	
 	def timed_countdown():
 		
 		while True:
@@ -33,7 +54,7 @@ class TimeServer:
 			timeout = random.randint(0,10)
 			random_process = random.randint(0, N-1)
 
-			sleep(timeout)
+			time.sleep(timeout)
 			
 			#Quando scade manda un messaggio ad un processo random di entrare in cs
 
@@ -46,13 +67,6 @@ class TimeServer:
 
 			self.bus.publish(msg)
 
-class Msg:
-	
-	kind : str
-	mit : int
-	dest: int
-	seq : int
-	num_rep : int
 	
 class Thread:
 	
@@ -61,8 +75,8 @@ class Thread:
 	cs:	bool
 	seq : int
 	maxseq : int
-	def_c: int[N]
-	reply_count: int[N]
+	def_c: [0]*N
+	reply_count: [0]*N
 	
 	def __init__(self,bus: EventBus,pid: int):
 		
@@ -74,6 +88,7 @@ class Thread:
 		self.bus = bus
 		
 		self.bus.subscribe(self.handle_message)	
+		print("pippo")
 	
 	def handle_message(self,message : Msg):
 		
@@ -132,8 +147,9 @@ def thread_function(pid, bus):
 def main():
 	#start threads
 	bus = pymq.init(RedisConfig())
-	TimeServer.start_threads(bus)
-	TimeServer.timed_countdown()
+	ts=TimeServer(bus)
+	ts.start_threads(bus)
+	ts.timed_countdown()
 
 if __name__ == '__main__':
     main()
