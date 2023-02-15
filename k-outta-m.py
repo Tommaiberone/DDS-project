@@ -8,10 +8,11 @@ import random
 import time
 
 
-M = 5
+M = 10
 N = 10
 BROADCAST = 1899
 threads = [0]*N
+in_cs=[]
 
 #q = queue.Queue()
 
@@ -109,24 +110,31 @@ class Thread:
 				if message.kind == "REQ":
 					self.maxh = max(self.maxh,message.h)
 					self.prio = (self.scdem or self.ok) and (self.h,self.pid) < (message.h,message.mit)
-					if not self.prio:
-						self.send("FREE",self.pid,message.mit,self.maxh,M)
-					else:
-						if message.mit in delayed:
-							self.send("FREE",self.pid,message.mit,self.maxh,M)
-						else:
-							if k != M:
-								self.send("FREE",self.pid,message.mit,self.maxh,M-k)
-								self.delayed.append(message.mit)
-	
 					
+					if ( self.prio!=True or message.mit in self.delayed):
+						self.send("FREE",self.pid,message.mit,self.maxh,M)
+						"""else:
+						if message.mit in delayed:
+							self.send("FREE",self.pid,message.mit,self.maxh,M)"""
+						
+					else:
+						if self.k != M:
+							self.send("FREE",self.pid,message.mit,self.maxh,M-self.k)
+							self.delayed.append(message.mit)
+								
 				elif message.kind == "FREE":
 					self.used[message.mit] -= message.k
 					if self.scdem and (self.sum_used() + self.k) <= M:
+						print("sono "+str(self.pid)+"per me tot usato e "+str(self.sum_used() + self.k))
 						self.scdem = False
 						self.ok = True
+						print(str(self.pid)+"sono in cs")
+						in_cs.append(self.pid)
+						print(in_cs)
 						self.do_cs_stuff()
 						self.ok = False
+						in_cs.remove(self.pid)
+						
 						for i in range(0,len(self.delayed)):
 							self.send("FREE",self.pid,message.mit,self.maxh,self.k)
 						self.delayed = []
@@ -137,9 +145,10 @@ class Thread:
 					self.h = self.maxh + 1
 					self.k = message.k
 					print("sono"+str(self.pid)+"e mando una req per"+str(self.k)+"risorse\n")
-					self.send("REQ",self.pid, BROADCAST, self.h, self.k)
 					for i in range(0,N):
-						self.used[i]+=M
+						if i != self.pid:
+							self.used[i]+=M
+					self.send("REQ",self.pid, BROADCAST, self.h, self.k)
 					
 
 			
