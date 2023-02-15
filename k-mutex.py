@@ -36,18 +36,19 @@ class TimeServer:
 	
 	def __init__(self, bus: EventBus):
 		self.bus = bus
-		print("topolino")
+		#print("topolino")
 		self.bus.subscribe(self.handle_message)
-		print("minni")
+		#print("minni")
 
 	def start_threads(self,bus):
 		for i in range(N):
-			print("pluto")
+			#print("pluto")
 			threads[i] = threading.Thread(target = thread_function, args=(i, bus))
+			threads[i].start()
 		#self.bus.subscribe(self.handle_message)
+		#threads[0].start()
 	
-	
-	def timed_countdown():
+	def timed_countdown(self):
 		
 		while True:
 
@@ -60,10 +61,10 @@ class TimeServer:
 
 			msg = Msg()
 			msg.kind = "GO"
-			mit = 0
-			dest = random_process
-			seq = 0
-			num_rep = 0
+			msg.mit = 0
+			msg.dest = random_process
+			msg.seq = 0
+			msg.num_rep = 0
 
 			self.bus.publish(msg)
 
@@ -86,35 +87,58 @@ class Thread:
 		self.seq = 0
 		self.maxseq = 0
 		self.bus = bus
+		self.def_c= [0]*N
+		self.reply_count= [0]*N
 		
+		#print("daje")
 		self.bus.subscribe(self.handle_message)	
-		print("pippo")
+		#print("pippo_thread")
+		
 	
 	def handle_message(self,message : Msg):
 		
 		if message.dest == self.pid or message.dest == BROADCAST:
 			
-			if message.kind == "REQ":
-				self.maxseq = max(maxseq,message.seq)
-				if cs or (req_cs and (self.seq,self.pid) < (message.seq,message.mit)):
-					self.def_c[message.mit] +=1
-				else:
-					send(self,"REPLY",self.pid,message.mit,self.maxseq,self.def_c[message.mit])
+			if self.pid != message.mit:
 					
+				if message.kind == "REQ":
+					self.maxseq = max(self.maxseq,message.seq)
+					if self.cs or (self.req_cs and (self.seq,self.pid) < (message.seq,message.mit)):
+						print("sono"+str(self.pid)+"e defero una req\n")
+						self.def_c[message.mit] +=1
+					else:
+						
 				
-			elif message.kind == "REPLY":
-				reply_count[message.mit] -= message.num_rep
-				if self.req_cs and not_in_cs() >= N-K:
-					self.req_cs = False
-					self.cs = True
-					do_cs_stuff()
+						self.send("REPLY",self.pid,message.mit,self.maxseq,1+self.def_c[message.mit])
+						self.def_c[message.mit] = 0
+						#print("sono"+str(self.pid)+"e mando una reply\n")
+					
+					
+				elif message.kind == "REPLY":
+					#print("sono"+str(self.pid)+"e ho ricevuto una reply\n")
+					print("questo e il mio reply conunt ["+str(self.pid)+"]"+str(self.reply_count[message.mit]))
+					self.reply_count[message.mit] -= message.num_rep
+					#if (self.not_in_cs() >= N-K):
+					if self.req_cs and (self.not_in_cs() >= N-K):
+						self.req_cs = False
+						print("sono"+str(self.pid)+"e entro in cs\n")
+						self.cs = True
+						self.do_cs_stuff()
+						self.cs = False
+						for i in range(0,N):
+							if self.def_c[i] != 0:
+								self.send("REPLY",self.pid,i,self.maxseq,self.def_c[i])
+								self.def_c[i] = 0
 
-			elif message.kind == "GO":
-				self.cs == True
-				self.maxseq += 1
-				send(self,"REQ",self.pid, BROADCAST, self.maxseq, 0)
-				for elem in reply_count:
-					reply_count += 1
+				elif message.kind == "GO":
+					self.req_cs = True
+					self.seq = self.maxseq + 1
+					print("sono"+str(self.pid)+"e mando una req\n")
+					self.send("REQ",self.pid, BROADCAST, self.seq, 0)
+					for i in range(0,N):
+						self.reply_count[i]+=1
+					#for elem in self.reply_count:
+					#	elem += 1
 
 
 			
@@ -124,24 +148,30 @@ class Thread:
 		m.mit = mit
 		m.dest = dest			
 		m.seq = self.maxseq
-		m.num = num
+		m.num_rep = num
 		self.bus.publish(m)
 		
 
-	def not_in_cs():
+	def not_in_cs(self):
+		print("sono "+str(self.pid)+" e conto le reply")
 		c = 0
 		for i in range(0,N):
-			if i != self.pid and reply_count[i] == 0:
+			print(self.reply_count[i])
+			if i != self.pid and self.reply_count[i] == 0:
 				c+=1
 		return c
 		
-	def do_cs_stuff():
-		for i in range(0,34):
-			print(self.pid+"\n")
+	def do_cs_stuff(self):
+		print("inizio a lavora")
+		time.sleep(random.randint(0,5))
+		print("vaffanculo vado a casa")
+		#for i in range(0,34):
+		#	print(str(self.pid)+"\n")
 
 
 def thread_function(pid, bus):
-	thread = Thread(pid, bus)
+	#print("ciao")
+	thread = Thread(bus, pid)
 
 
 def main():
