@@ -9,7 +9,7 @@ import time
 
 
 M = 10
-N = 10
+N = 5
 BROADCAST = 1899
 threads = [0]*N
 in_cs=[]
@@ -42,7 +42,7 @@ class TimeServer:
 		#print("minni")
 
 	def start_threads(self,bus):
-		for i in range(N):
+		for i in range(0, N):
 			#print("pluto")
 			threads[i] = threading.Thread(target = thread_function, args=(i, bus))
 			threads[i].start()
@@ -108,27 +108,34 @@ class Thread:
 			if self.pid != message.mit:
 					
 				if message.kind == "REQ":
+
 					self.maxh = max(self.maxh,message.h)
-					self.prio = (self.scdem or self.ok) and (self.h,self.pid) < (message.h,message.mit)
+					self.prio = (self.scdem or self.ok) and ((self.h,self.pid) < (message.h,message.mit))
 					
+					# if (self.h < message.h and self.scdem)==True:
+					# 	print("EDDAJE\n\n\n\n\n\n")
+
 					if ( self.prio!=True or message.mit in self.delayed):
 						self.send("FREE",self.pid,message.mit,self.maxh,M)
 						"""else:
 						if message.mit in delayed:
-							self.send("FREE",self.pid,message.mit,self.maxh,M)"""
+							self.send("FREE",self.pid,message.mit,self.maxh,M)"""			
 						
 					else:
+						
 						if self.k != M:
 							self.send("FREE",self.pid,message.mit,self.maxh,M-self.k)
-							self.delayed.append(message.mit)
+						self.delayed.append(message.mit)
 								
 				elif message.kind == "FREE":
 					self.used[message.mit] -= message.k
+					print("sono "+str(self.pid)+" per me tot usato è "+str(self.sum_used() + self.k))
+					if(len(in_cs)!=0):
+						print("C'è qualcuno in cs")
 					if self.scdem and (self.sum_used() + self.k) <= M:
-						print("sono "+str(self.pid)+"per me tot usato e "+str(self.sum_used() + self.k))
 						self.scdem = False
 						self.ok = True
-						print(str(self.pid)+"sono in cs")
+						print("sono " + str(self.pid)+" e sono in cs")
 						in_cs.append(self.pid)
 						print(in_cs)
 						self.do_cs_stuff()
@@ -136,19 +143,21 @@ class Thread:
 						in_cs.remove(self.pid)
 						
 						for i in range(0,len(self.delayed)):
-							self.send("FREE",self.pid,message.mit,self.maxh,self.k)
+							self.send("FREE",self.pid,i,self.maxh,self.k)
 						self.delayed = []
 
 				elif message.kind == "GO":
-					self.scdem = True
-					self.ok = False
-					self.h = self.maxh + 1
-					self.k = message.k
-					print("sono"+str(self.pid)+"e mando una req per"+str(self.k)+"risorse\n")
-					for i in range(0,N):
-						if i != self.pid:
-							self.used[i]+=M
-					self.send("REQ",self.pid, BROADCAST, self.h, self.k)
+					
+					if not(self.scdem or self.ok):
+						self.scdem = True
+						self.ok = False
+						self.h = self.maxh + 1
+						self.k = message.k
+						print("sono "+str(self.pid)+" e mando una req per "+str(self.k)+" risorse\n")
+						for i in range(0,N):
+							if i != self.pid:
+								self.used[i]+=M
+						self.send("REQ",self.pid, BROADCAST, self.h, self.k)
 					
 
 			
@@ -157,7 +166,7 @@ class Thread:
 		m.kind = kind
 		m.mit = mit
 		m.dest = dest			
-		m.h = self.maxh
+		m.h = h
 		m.k = num
 		self.bus.publish(m)
 		
@@ -170,9 +179,9 @@ class Thread:
 					
 		
 	def do_cs_stuff(self):
-		print(str(self.pid)+" inizia a lavora con "+str(self.k)+" risorse")
-		time.sleep(random.randint(1,7))
-		print("vaffanculo, "+str(self.pid)+" va a casa")
+		print(str(self.pid)+" inizia a lavora con "+str(self.k)+" risorse\n")
+		time.sleep(random.randint(1,2))
+		print("vaffanculo, "+str(self.pid)+" va a casa\n")
 		#for i in range(0,34):
 		#	print(str(self.pid)+"\n")
 
