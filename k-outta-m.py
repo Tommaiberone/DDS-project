@@ -1,6 +1,4 @@
 import threading
-#import tcp
-import queue
 import pymq
 from pymq import EventBus
 from pymq.provider.redis import RedisConfig
@@ -8,14 +6,14 @@ import random
 import time
 
 
-M = 10
-N = 5
+DEBUG = False
+CHATTY = True
+
+M = 100
+N = 10
+BROKER = 1293
 BROADCAST = 1899
 threads = [0]*N
-in_cs=[]
-
-#q = queue.Queue()
-
 
 class Msg:
 	
@@ -30,6 +28,7 @@ class TimeServer:
 	bus : EventBus
 	threads = [0]*N
 	resources = [0]*M
+	threads_in_cs = []
 	
 	def handle_message(self,message : Msg):
 		return
@@ -37,17 +36,12 @@ class TimeServer:
 	
 	def __init__(self, bus: EventBus):
 		self.bus = bus
-		#print("topolino")
 		self.bus.subscribe(self.handle_message)
-		#print("minni")
 
 	def start_threads(self,bus):
 		for i in range(0, N):
-			#print("pluto")
 			threads[i] = threading.Thread(target = thread_function, args=(i, bus))
 			threads[i].start()
-		#self.bus.subscribe(self.handle_message)
-		#threads[0].start()
 	
 	def timed_countdown(self):
 		
@@ -59,17 +53,30 @@ class TimeServer:
 			time.sleep(timeout)
 			
 			#Quando scade manda un messaggio ad un processo random di entrare in cs
-
 			msg = Msg()
 			msg.kind = "GO"
 			msg.mit = 0
 			msg.dest = random_process
 			msg.h = 0
-			msg.k = random.randint(1,M)
+			msg.k = random.randint(1,10)
 
 			self.bus.publish(msg)
 
-	
+	def handle_message(self, message : Msg) :
+
+		if message.dest == BROKER:
+
+			if message.kind == "ADD":
+
+				self.threads_in_cs.append(message.mit)
+
+				print("I processi attualmente in cs sono: ")
+				print(self.threads_in_cs)
+
+			else:
+
+				self.threads_in_cs.remove(message.mit)
+		
 class Thread:
 
 	scdem : bool
@@ -81,7 +88,6 @@ class Thread:
 	delayed : []
 	k		: int
 	pid 	: int
-	
 	
 	def __init__(self,bus: EventBus,pid: int):
 		
@@ -96,9 +102,7 @@ class Thread:
 		self.used= [0]*N
 		self.delayed= []
 		
-		#print("daje")
 		self.bus.subscribe(self.handle_message)	
-		#print("pippo_thread")
 		
 	
 	def handle_message(self,message : Msg):
@@ -111,9 +115,6 @@ class Thread:
 
 					self.maxh = max(self.maxh,message.h)
 					self.prio = (self.scdem or self.ok) and ((self.h,self.pid) < (message.h,message.mit))
-					
-					# if (self.h < message.h and self.scdem)==True:
-					# 	print("EDDAJE\n\n\n\n\n\n")
 
 					if ( self.prio!=True or message.mit in self.delayed):
 						self.send("FREE",self.pid,message.mit,self.maxh,M)
@@ -129,22 +130,27 @@ class Thread:
 								
 				elif message.kind == "FREE":
 					self.used[message.mit] -= message.k
-					print("sono "+str(self.pid)+" per me tot usato è "+str(self.sum_used() + self.k))
-					if(len(in_cs)!=0):
-						print("C'è qualcuno in cs")
+					if DEBUG: print("sono "+str(self.pid)+", ", message.mit, " mi ha liberato ", message.k, " risorse")
+
+					if DEBUG: 
+						if self.scdem and (self.sum_used() + self.k) > M:
+							print("sono "+str(self.pid)+", ho richiesto "+str(self.k) + ", ma ci sono solo " + str(max(0,M - self.sum_used())) + " liberi")
+					
 					if self.scdem and (self.sum_used() + self.k) <= M:
 						self.scdem = False
 						self.ok = True
-						print("sono " + str(self.pid)+" e sono in cs")
-						in_cs.append(self.pid)
-						print(in_cs)
+						
+						if CHATTY:
+							print("sono " + str(self.pid)+" e sono in cs")
+						
 						self.do_cs_stuff()
 						self.ok = False
-						in_cs.remove(self.pid)
 						
 						for i in range(0,len(self.delayed)):
-							self.send("FREE",self.pid,i,self.maxh,self.k)
+							self.send("FREE",self.pid,self.delayed[i],self.maxh,self.k)
+
 						self.delayed = []
+						self.k = 0
 
 				elif message.kind == "GO":
 					
@@ -153,10 +159,13 @@ class Thread:
 						self.ok = False
 						self.h = self.maxh + 1
 						self.k = message.k
-						print("sono "+str(self.pid)+" e mando una req per "+str(self.k)+" risorse\n")
+
+						if DEBUG: print("sono "+str(self.pid)+" e mando una req per "+str(self.k)+" risorse\n")
+						
 						for i in range(0,N):
 							if i != self.pid:
 								self.used[i]+=M
+
 						self.send("REQ",self.pid, BROADCAST, self.h, self.k)
 					
 
@@ -180,18 +189,21 @@ class Thread:
 		
 	def do_cs_stuff(self):
 		print(str(self.pid)+" inizia a lavora con "+str(self.k)+" risorse\n")
-		time.sleep(random.randint(1,2))
+
+		self.send("ADD", self.pid, BROKER, 0, self.k)
+
+		time.sleep(random.randint(1,10))
+
+		self.send("REMOVE", self.pid, BROKER, 0, self.k)
 		print("vaffanculo, "+str(self.pid)+" va a casa\n")
-		#for i in range(0,34):
-		#	print(str(self.pid)+"\n")
 
 
 def thread_function(pid, bus):
-	#print("ciao")
 	thread = Thread(bus, pid)
 
 
 def main():
+
 	#start threads
 	bus = pymq.init(RedisConfig())
 	ts=TimeServer(bus)
