@@ -201,8 +201,9 @@ class Thread:
 	def do_cs_stuff(self):
 
 		# Define a function that simulates the process performing some critical section work
-		print("inizio a lavora")
-		print("vaffanculo vado a casa")
+		#time.sleep(.5)
+		if CHATTY:print("inizio a lavora")
+		if CHATTY:print("vaffanculo vado a casa")
 
 def thread_function(pid, bus):
 

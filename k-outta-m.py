@@ -7,9 +7,9 @@ import time
 
 
 DEBUG = False
-CHATTY = True
+CHATTY = False
 
-M = 100
+M = 5
 N = 10
 BROKER = 1293
 BROADCAST = 1899
@@ -39,28 +39,43 @@ class TimeServer:
 		self.bus.subscribe(self.handle_message)
 
 	def start_threads(self,bus):
+
 		for i in range(0, N):
 			threads[i] = threading.Thread(target = thread_function, args=(i, bus))
 			threads[i].start()
 	
+		for i in range(N):
+			threads[i].join()
+			
 	def timed_countdown(self):
 		
-		while True:
+		with open('values.txt', 'r') as file:
+			values = file.read()
+			values = values.replace("\n", "").replace("  ", " ").split(" ")
+			float_values = list(map(float, values))
 
-			timeout = random.randint(0,2)
-			random_process = random.randint(0, N-1)
+			with open('processes.txt', 'r') as file2:
+				processes = file2.read()
+				processes = processes.replace("\n", "").split(" ")
+				int_processes = list(map(int, processes))
 
-			time.sleep(timeout)
-			
-			#Quando scade manda un messaggio ad un processo random di entrare in cs
-			msg = Msg()
-			msg.kind = "GO"
-			msg.mit = 0
-			msg.dest = random_process
-			msg.h = 0
-			msg.k = random.randint(1,10)
+				for i in range(len(float_values)):
 
-			self.bus.publish(msg)
+					timeout = float_values[i]
+					random_process = int_processes[i]
+					
+					time.sleep(timeout)
+					
+					#Quando scade manda un messaggio ad un processo random di entrare in cs
+					msg = Msg()
+					msg.kind = "GO"
+					msg.mit = 0
+					msg.dest = random_process
+					msg.h = 0
+					#msg.k = random.randint(1,10)
+					msg.k = 1
+
+					self.bus.publish(msg)
 
 	def handle_message(self, message : Msg) :
 
@@ -70,8 +85,8 @@ class TimeServer:
 
 				self.threads_in_cs.append(message.mit)
 
-				print("I processi attualmente in cs sono: ")
-				print(self.threads_in_cs)
+				if DEBUG: print("I processi attualmente in cs sono: ")
+				if DEBUG: print(self.threads_in_cs)
 
 			else:
 
@@ -88,6 +103,7 @@ class Thread:
 	delayed : []
 	k		: int
 	pid 	: int
+	time : float
 	
 	def __init__(self,bus: EventBus,pid: int):
 		
@@ -101,6 +117,7 @@ class Thread:
 		self.bus = bus
 		self.used= [0]*N
 		self.delayed= []
+		self.time = 0
 		
 		self.bus.subscribe(self.handle_message)	
 		
@@ -134,7 +151,7 @@ class Thread:
 
 					if DEBUG: 
 						if self.scdem and (self.sum_used() + self.k) > M:
-							print("sono "+str(self.pid)+", ho richiesto "+str(self.k) + ", ma ci sono solo " + str(max(0,M - self.sum_used())) + " liberi")
+							if DEBUG: print("sono "+str(self.pid)+", ho richiesto "+str(self.k) + ", ma ci sono solo " + str(max(0,M - self.sum_used())) + " liberi")
 					
 					if self.scdem and (self.sum_used() + self.k) <= M:
 						self.scdem = False
@@ -153,6 +170,8 @@ class Thread:
 						self.k = 0
 
 				elif message.kind == "GO":
+
+					self.time = time.time()
 					
 					if not(self.scdem or self.ok):
 						self.scdem = True
@@ -188,14 +207,17 @@ class Thread:
 					
 		
 	def do_cs_stuff(self):
-		print(str(self.pid)+" inizia a lavora con "+str(self.k)+" risorse\n")
+
+		print("Sono entrato in cs dopo:", time.time() - self.time, "secondi")
+
+		if CHATTY: print(str(self.pid)+" inizia a lavora con "+str(self.k)+" risorse\n")
 
 		self.send("ADD", self.pid, BROKER, 0, self.k)
 
-		time.sleep(random.randint(1,10))
+		#time.sleep(random.randint(1,10))
 
 		self.send("REMOVE", self.pid, BROKER, 0, self.k)
-		print("vaffanculo, "+str(self.pid)+" va a casa\n")
+		if CHATTY: print("vaffanculo, "+str(self.pid)+" va a casa\n")
 
 
 def thread_function(pid, bus):
