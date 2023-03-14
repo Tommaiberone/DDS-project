@@ -43,13 +43,14 @@ class TimeServer:
 		for i in range(0, N):
 			threads[i] = threading.Thread(target = thread_function, args=(i, bus))
 			threads[i].start()
+			#threads[i].join()
 	
-		for i in range(N):
-			threads[i].join()
+		#for i in range(N):
+		#	threads[i].join()
 			
 	def timed_countdown(self):
 		
-		with open('values.txt', 'r') as file:
+		with open('values_2.txt', 'r') as file:
 			values = file.read()
 			values = values.replace("\n", "").replace("  ", " ").split(" ")
 			float_values = list(map(float, values))
@@ -76,6 +77,7 @@ class TimeServer:
 					msg.k = 1
 
 					self.bus.publish(msg)
+				#time.sleep(10)
 
 	def handle_message(self, message : Msg) :
 
@@ -208,13 +210,18 @@ class Thread:
 		
 	def do_cs_stuff(self):
 
-		print("Sono entrato in cs dopo:", time.time() - self.time, "secondi")
+		print("att_cs,"+str(time.time() - self.time))
 
 		if CHATTY: print(str(self.pid)+" inizia a lavora con "+str(self.k)+" risorse\n")
 
 		self.send("ADD", self.pid, BROKER, 0, self.k)
+		
+		t0 = time.time()
 
 		#time.sleep(random.randint(1,10))
+		time.sleep(0.5)
+		
+		print("cs,"+str(time.time()-t0))
 
 		self.send("REMOVE", self.pid, BROKER, 0, self.k)
 		if CHATTY: print("vaffanculo, "+str(self.pid)+" va a casa\n")
@@ -231,6 +238,10 @@ def main():
 	ts=TimeServer(bus)
 	ts.start_threads(bus)
 	ts.timed_countdown()
+	for i in range(0,N):
+		threads[i].join()
+	print("ho fatto i join")
+		
 
 if __name__ == '__main__':
     main()

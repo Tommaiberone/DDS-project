@@ -50,7 +50,7 @@ class TimeServer:
 	# Periodically sends GO messages to random processes
 	def timed_countdown(self):
 
-		with open('values.txt', 'r') as file:
+		with open('values_2.txt', 'r') as file:
 			values = file.read()
 			values = values.replace("\n", "").replace("  ", " ").split(" ")
 			float_values = list(map(float, values))
@@ -76,6 +76,7 @@ class TimeServer:
 					msg.seq = 0
 					msg.num_rep = 0
 					self.bus.publish(msg)
+				#time.sleep(10)
 
 # Define a Thread class
 class Thread:
@@ -140,7 +141,7 @@ class Thread:
 						self.req_cs = False
 						if CHATTY: print("sono" + str(self.pid) + "e entro in cs\n")
 						
-						print("Sono entrato in cs dopo:", time.time() - self.time, "secondi")
+						print("att_cs"+","+str( time.time() - self.time))
 						
 						self.cs = True
 
@@ -201,7 +202,9 @@ class Thread:
 	def do_cs_stuff(self):
 
 		# Define a function that simulates the process performing some critical section work
-		#time.sleep(.5)
+		t0 = time.time()
+		time.sleep(.5)
+		print("cs,"+str(time.time()-t0))
 		if CHATTY:print("inizio a lavora")
 		if CHATTY:print("vaffanculo vado a casa")
 
@@ -220,6 +223,9 @@ def main():
 	timedServer.timed_countdown()
 
 	TIME = time.time()
+	
+	for i in range(0,N):
+		threads[i].join()
 
 if __name__ == '__main__':
     main()
