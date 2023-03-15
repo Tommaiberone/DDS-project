@@ -14,6 +14,7 @@ N = 10
 BROKER = 1293
 BROADCAST = 1899
 threads = [0]*N
+msg_num = 0
 
 class Msg:
 	
@@ -50,7 +51,7 @@ class TimeServer:
 			
 	def timed_countdown(self):
 		
-		with open('values_2.txt', 'r') as file:
+		with open('values.txt', 'r') as file:
 			values = file.read()
 			values = values.replace("\n", "").replace("  ", " ").split(" ")
 			float_values = list(map(float, values))
@@ -126,6 +127,8 @@ class Thread:
 	
 	def handle_message(self,message : Msg):
 		
+		global msg_num
+		
 		if message.dest == self.pid or message.dest == BROADCAST:
 			
 			if self.pid != message.mit:
@@ -137,6 +140,7 @@ class Thread:
 
 					if ( self.prio!=True or message.mit in self.delayed):
 						self.send("FREE",self.pid,message.mit,self.maxh,M)
+						msg_num+=1
 						"""else:
 						if message.mit in delayed:
 							self.send("FREE",self.pid,message.mit,self.maxh,M)"""			
@@ -145,6 +149,7 @@ class Thread:
 						
 						if self.k != M:
 							self.send("FREE",self.pid,message.mit,self.maxh,M-self.k)
+							msg_num+=1
 						self.delayed.append(message.mit)
 								
 				elif message.kind == "FREE":
@@ -167,6 +172,7 @@ class Thread:
 						
 						for i in range(0,len(self.delayed)):
 							self.send("FREE",self.pid,self.delayed[i],self.maxh,self.k)
+							msg_num+=1
 
 						self.delayed = []
 						self.k = 0
@@ -188,6 +194,7 @@ class Thread:
 								self.used[i]+=M
 
 						self.send("REQ",self.pid, BROADCAST, self.h, self.k)
+						msg_num += N-1
 					
 
 			
@@ -219,7 +226,7 @@ class Thread:
 		t0 = time.time()
 
 		#time.sleep(random.randint(1,10))
-		time.sleep(0.5)
+		#time.sleep(0.5)
 		
 		print("cs,"+str(time.time()-t0))
 
@@ -241,6 +248,7 @@ def main():
 	for i in range(0,N):
 		threads[i].join()
 	print("ho fatto i join")
+	print("in totale sono stai inviati "+str(msg_num)+" messaggi")
 		
 
 if __name__ == '__main__':

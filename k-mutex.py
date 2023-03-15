@@ -3,6 +3,8 @@ import pymq
 from pymq import EventBus
 from pymq.provider.redis import RedisConfig
 import time
+import random
+
 
 # ConstantimedServer
 K = 5
@@ -11,6 +13,12 @@ BROADCAST = 1899
 TIME = 0
 threads = [0]*N
 CHATTY = False
+
+class Counter:
+	c = 0
+	
+pippo = Counter()
+
 
 # Define a message class
 class Msg:
@@ -26,6 +34,7 @@ class TimeServer:
 	threads = [0]*N
 	resources = [0]*K
 	
+	
 	# Handler for incoming messages
 	def handle_message(self, message : Msg):
 
@@ -36,6 +45,7 @@ class TimeServer:
 
 		self.bus = bus
 		self.bus.subscribe(self.handle_message)
+		
 
 	# StartimedServer worker threads
 	def start_threads(self, bus):
@@ -128,6 +138,7 @@ class Thread:
 						# Grant the request by sending a REPLY message
 						self.send("REPLY",self.pid,message.mit,self.maxseq,1+self.def_c[message.mit])
 						self.def_c[message.mit] = 0
+						pippo.c+=1
 
 				      # Check if the message is a reply to a request for the critical section
 				elif message.kind == "REPLY":
@@ -152,6 +163,7 @@ class Thread:
 						for i in range(0, N):
 							if self.def_c[i] != 0:
 								self.send("REPLY", self.pid, i, self.maxseq, self.def_c[i])
+								pippo.c +=1
 								self.def_c[i] = 0
 								
 				# Check if the message is a signal to request access to the critical section
@@ -167,6 +179,7 @@ class Thread:
 						if CHATTY: print("sono"+str(self.pid)+"e mando una req\n")
 						# Send a request message to all processes and update the reply_count variable
 						self.send("REQ", self.pid, BROADCAST, self.seq, 0)
+						pippo.c+=N-1
 						
 						for i in range(0, N):
 							self.reply_count[i] += 1
@@ -203,7 +216,8 @@ class Thread:
 
 		# Define a function that simulates the process performing some critical section work
 		t0 = time.time()
-		time.sleep(.5)
+		#time.sleep(.5)
+		time.sleep(random.uniform(0.1,0.3))
 		print("cs,"+str(time.time()-t0))
 		if CHATTY:print("inizio a lavora")
 		if CHATTY:print("vaffanculo vado a casa")
@@ -214,6 +228,8 @@ def thread_function(pid, bus):
 	thread = Thread(bus, pid)
 
 def main():
+	
+	
 
 	# Initialize the message bus and the time server
 	bus = pymq.init(RedisConfig())
@@ -226,6 +242,8 @@ def main():
 	
 	for i in range(0,N):
 		threads[i].join()
+	
+	print("In totale sono stati inviati "+str(pippo.c)+" messaggi")
 
 if __name__ == '__main__':
     main()
