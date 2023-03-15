@@ -4,7 +4,7 @@ from pymq import EventBus
 from pymq.provider.redis import RedisConfig
 import time
 import random
-
+import sys
 
 # ConstantimedServer
 K = 5
@@ -12,8 +12,9 @@ N = 10
 BROADCAST = 1899
 TIME = 0
 threads = [0]*N
-CHATTY = False
+CHATTY = True
 is_finished = 0
+SERVER = 0xcafe
 
 class Counter:
 	c = 0
@@ -55,13 +56,13 @@ class TimeServer:
 			threads[i] = threading.Thread(target=thread_function, args=(i, bus))
 			threads[i].start()
 
-		for i in range(N):
-			threads[i].join()
+		#for i in range(N):
+		#	threads[i].join()
 	
 	# Periodically sends GO messages to random processes
 	def timed_countdown(self):
 
-		with open('values.txt', 'r') as file:
+		with open('values_2.txt', 'r') as file:
 			values = file.read()
 			values = values.replace("\n", "").replace("  ", " ").split(" ")
 			float_values = list(map(float, values))
@@ -82,7 +83,7 @@ class TimeServer:
 					# Send a GO message to a random process
 					msg = Msg()
 					msg.kind = "GO"
-					msg.mit = 0
+					msg.mit = SERVER
 					msg.dest = random_process
 					msg.seq = 0
 					msg.num_rep = 0
@@ -90,7 +91,7 @@ class TimeServer:
 				
 				msg = Msg()
 				msg.kind = "STOP"
-				msg.mit = 0
+				msg.mit = SERVER
 				msg.dest = BROADCAST
 				msg.h = 0
 				msg.k = 1
@@ -125,6 +126,13 @@ class Thread:
 		self.queue = []
 		
 		time = 0	
+		
+	def self_destroy(self):
+		if CHATTY: print("Sono il processo " + str(self.pid) + " e mi fermo")
+		self.bus.unsubscribe(self.handle_message)
+		sys.exit()
+		#self.__del__()
+		return
 		
 	# Handler for incoming messages
 	def handle_message(self, message : Msg):
@@ -266,7 +274,7 @@ class Thread:
 		# Define a function that simulates the process performing some critical section work
 		t0 = time.time()
 		#time.sleep(.5)
-		#time.sleep(random.uniform(0.1,0.3))
+		time.sleep(random.uniform(0.1,0.3))
 		print("cs,"+str(time.time()-t0))
 		if CHATTY:print("inizio a lavora")
 		if CHATTY:print("vaffanculo vado a casa")
@@ -289,7 +297,7 @@ def main():
 
 	TIME = time.time()
 
-	time.sleep(3)
+	time.sleep(15)
 	
 	for i in range(0,N):
 		threads[i].join()

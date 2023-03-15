@@ -9,7 +9,7 @@ import time
 
 
 DEBUG = False
-CHATTY = False
+CHATTY = True
 
 M = 5
 N = 10
@@ -18,6 +18,7 @@ BROADCAST = 1899
 threads = [0]*N
 msg_num = 0
 is_finished = 0
+SERVER = 0xcafe
 
 class Msg:
 	
@@ -53,7 +54,7 @@ class TimeServer:
 			
 	def timed_countdown(self):
 		
-		with open('values_2.txt', 'r') as file:
+		with open('values.txt', 'r') as file:
 			values = file.read()
 			values = values.replace("\n", "").replace("  ", " ").split(" ")
 			float_values = list(map(float, values))
@@ -62,10 +63,12 @@ class TimeServer:
 				processes = file2.read()
 				processes = processes.replace("\n", "").split(" ")
 				int_processes = list(map(int, processes))
+				#print(int_processes)
 
 				for i in range(len(float_values)):
 
 					timeout = float_values[i]
+					#print(int_processes[i])
 					random_process = int_processes[i]
 					
 					time.sleep(timeout)
@@ -73,16 +76,17 @@ class TimeServer:
 					#Quando scade manda un messaggio ad un processo random di entrare in cs
 					msg = Msg()
 					msg.kind = "GO"
-					msg.mit = 0
+					msg.mit = SERVER #special value for server use
 					msg.dest = random_process
 					msg.h = 0
 					msg.k = 1
+					
 
 					self.bus.publish(msg)
 
 				msg = Msg()
 				msg.kind = "STOP"
-				msg.mit = 0
+				msg.mit = SERVER
 				msg.dest = BROADCAST
 				msg.h = 0
 				msg.k = 1
@@ -154,6 +158,8 @@ class Thread:
 		global msg_num
 		global is_finished
 		
+		#print(message.dest)
+		
 		if message.dest == self.pid or message.dest == BROADCAST:
 			
 			if self.pid != message.mit:
@@ -220,6 +226,8 @@ class Thread:
 							
 							if CHATTY: print("Sono il processo " + str(self.pid) + " e ho finito")
 							is_finished += 1
+							
+							print(is_finished)
 
 							if is_finished == N:
 								if CHATTY: print("Sono il processo " + str(self.pid) + " e ESEGUO uno stop")
@@ -289,6 +297,7 @@ class Thread:
 
 		#time.sleep(random.randint(1,10))
 		#time.sleep(0.5)
+		#time.sleep(random.uniform(0.1,2))
 		
 		print("cs,"+str(time.time()-t0))
 
@@ -308,7 +317,7 @@ def main():
 	ts.start_threads(bus)
 	ts.timed_countdown()
 
-	time.sleep(5)
+	time.sleep(15)
 
 	for i in range(0,N):
 		threads[i].join()
