@@ -1,5 +1,5 @@
 import math
-f = open("stat1.csv",'r')
+f = open("k-mutex_stat_values_1.csv",'r')
 tot = 0
 att = {}
 cs = {}

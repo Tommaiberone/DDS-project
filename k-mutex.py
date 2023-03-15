@@ -13,6 +13,7 @@ BROADCAST = 1899
 TIME = 0
 threads = [0]*N
 CHATTY = False
+is_finished = 0
 
 class Counter:
 	c = 0
@@ -60,7 +61,7 @@ class TimeServer:
 	# Periodically sends GO messages to random processes
 	def timed_countdown(self):
 
-		with open('values_2.txt', 'r') as file:
+		with open('values.txt', 'r') as file:
 			values = file.read()
 			values = values.replace("\n", "").replace("  ", " ").split(" ")
 			float_values = list(map(float, values))
@@ -86,7 +87,15 @@ class TimeServer:
 					msg.seq = 0
 					msg.num_rep = 0
 					self.bus.publish(msg)
-				#time.sleep(10)
+				
+				msg = Msg()
+				msg.kind = "STOP"
+				msg.mit = 0
+				msg.dest = BROADCAST
+				msg.h = 0
+				msg.k = 1
+
+				self.bus.publish(msg)
 
 # Define a Thread class
 class Thread:
@@ -99,6 +108,7 @@ class Thread:
 	def_c: [0]*N
 	reply_count: [0]*N
 	time : float
+	queue : []
 	
 	# Constructor
 	def __init__(self,bus: EventBus,pid: int):
@@ -112,10 +122,14 @@ class Thread:
 		self.def_c= [0]*N
 		self.reply_count= [0]*N
 		self.bus.subscribe(self.handle_message)
+		self.queue = []
+		
 		time = 0	
 		
 	# Handler for incoming messages
 	def handle_message(self, message : Msg):
+
+		global is_finished
 
 		# If the message is addressed to this process or is a broadcast
 		if message.dest == self.pid or message.dest == BROADCAST:
@@ -123,7 +137,22 @@ class Thread:
 			# Ignore messages sent by this process
 			if self.pid != message.mit:
 
-				if message.kind == "REQ":
+				if message.kind == "STOP":
+
+					if self.req_cs or self.cs:
+						if CHATTY: print("Sono il processo " + str(self.pid) + " e APPENDO uno stop")
+						self.queue.append(message)
+
+					else:
+						is_finished += 1
+						if CHATTY: print("Sono il processo " + str(self.pid) + " e ho finito")
+
+						if is_finished == N:
+							if CHATTY: print("Sono il processo " + str(self.pid) + " e ESEGUO uno stop")
+							self.self_destroy()
+					
+
+				elif message.kind == "REQ":
 
 					# Update the maximum sequence number seen so far
 					self.maxseq = max(self.maxseq,message.seq)
@@ -165,26 +194,46 @@ class Thread:
 								self.send("REPLY", self.pid, i, self.maxseq, self.def_c[i])
 								pippo.c +=1
 								self.def_c[i] = 0
+
+						if len(self.queue) != 0 and self.queue[0].kind == "STOP":
+							
+							if CHATTY: print("Sono il processo " + str(self.pid) + " e ho finito")
+							is_finished += 1
+
+							if is_finished == N:
+								if CHATTY: print("Sono il processo " + str(self.pid) + " e ESEGUO uno stop")
+								self.self_destroy()
+						
+						elif len(self.queue) != 0 and self.queue[0].kind == "GO":
+							self.send_request()
+							self.queue.pop(0)
 								
 				# Check if the message is a signal to request access to the critical section
 				elif message.kind == "GO":
 
-					if self.req_cs == False:
+					if self.req_cs or self.cs:
+						self.queue.append(message)
 
-						self.time = time.time()
-						
-						# Update the request variables
-						self.req_cs = True
-						self.seq = self.maxseq + 1
-						if CHATTY: print("sono"+str(self.pid)+"e mando una req\n")
-						# Send a request message to all processes and update the reply_count variable
-						self.send("REQ", self.pid, BROADCAST, self.seq, 0)
-						pippo.c+=N-1
-						
-						for i in range(0, N):
-							self.reply_count[i] += 1
+					else:
+						self.send_request()
+
+					
 
 
+	def send_request(self):
+
+		self.time = time.time()
+		
+		# Update the request variables
+		self.req_cs = True
+		self.seq = self.maxseq + 1
+		if CHATTY: print("sono"+str(self.pid)+"e mando una req\n")
+		# Send a request message to all processes and update the reply_count variable
+		self.send("REQ", self.pid, BROADCAST, self.seq, 0)
+		pippo.c+=N-1
+		
+		for i in range(0, N):
+			self.reply_count[i] += 1
 			
 	def send(self, kind: str, mit: int, dest: int, seq: int, num: int):
 
@@ -217,7 +266,7 @@ class Thread:
 		# Define a function that simulates the process performing some critical section work
 		t0 = time.time()
 		#time.sleep(.5)
-		time.sleep(random.uniform(0.1,0.3))
+		#time.sleep(random.uniform(0.1,0.3))
 		print("cs,"+str(time.time()-t0))
 		if CHATTY:print("inizio a lavora")
 		if CHATTY:print("vaffanculo vado a casa")
@@ -239,6 +288,8 @@ def main():
 	timedServer.timed_countdown()
 
 	TIME = time.time()
+
+	time.sleep(3)
 	
 	for i in range(0,N):
 		threads[i].join()
