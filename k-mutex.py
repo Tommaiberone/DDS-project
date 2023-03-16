@@ -62,12 +62,12 @@ class TimeServer:
 	# Periodically sends GO messages to random processes
 	def timed_countdown(self):
 
-		with open('values_2.txt', 'r') as file:
+		with open('Inputs/values_fast.txt', 'r') as file:
 			values = file.read()
 			values = values.replace("\n", "").replace("  ", " ").split(" ")
 			float_values = list(map(float, values))
 
-			with open('processes.txt', 'r') as file2:
+			with open('Inputs/processes.txt', 'r') as file2:
 				processes = file2.read()
 				processes = processes.replace("\n", "").split(" ")
 				int_processes = list(map(int, processes))
@@ -128,10 +128,9 @@ class Thread:
 		time = 0	
 		
 	def self_destroy(self):
+
 		if CHATTY: print("Sono il processo " + str(self.pid) + " e mi fermo")
 		self.bus.unsubscribe(self.handle_message)
-		sys.exit()
-		#self.__del__()
 		return
 		
 	# Handler for incoming messages
@@ -285,8 +284,6 @@ def thread_function(pid, bus):
 	thread = Thread(bus, pid)
 
 def main():
-	
-	
 
 	# Initialize the message bus and the time server
 	bus = pymq.init(RedisConfig())
@@ -297,7 +294,8 @@ def main():
 
 	TIME = time.time()
 
-	time.sleep(15)
+	while is_finished != N:
+		time.sleep(1)
 	
 	for i in range(0,N):
 		threads[i].join()

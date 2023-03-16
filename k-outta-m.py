@@ -48,18 +48,15 @@ class TimeServer:
 		for i in range(0, N):
 			threads[i] = threading.Thread(target = thread_function, args=(i, bus))
 			threads[i].start()
-	
-		#for i in range(N):
-		#	threads[i].join()
 			
 	def timed_countdown(self):
 		
-		with open('values.txt', 'r') as file:
+		with open('Inputs/values_fast.txt', 'r') as file:
 			values = file.read()
 			values = values.replace("\n", "").replace("  ", " ").split(" ")
 			float_values = list(map(float, values))
 
-			with open('processes.txt', 'r') as file2:
+			with open('Inputs/processes.txt', 'r') as file2:
 				processes = file2.read()
 				processes = processes.replace("\n", "").split(" ")
 				int_processes = list(map(int, processes))
@@ -141,16 +138,11 @@ class Thread:
 		self.bus.subscribe(self.handle_message)
 
 		if CHATTY: print("Sono il processo " + str(self.pid))
-
-
-	def temp(self, message : Msg):
-		return
 		
 	def self_destroy(self):
+
 		if CHATTY: print("Sono il processo " + str(self.pid) + " e mi fermo")
 		self.bus.unsubscribe(self.handle_message)
-		sys.exit()
-		#self.__del__()
 		return
 
 	def handle_message(self,message : Msg):
@@ -317,7 +309,8 @@ def main():
 	ts.start_threads(bus)
 	ts.timed_countdown()
 
-	time.sleep(15)
+	while is_finished != N:
+		time.sleep(1)
 
 	for i in range(0,N):
 		threads[i].join()
