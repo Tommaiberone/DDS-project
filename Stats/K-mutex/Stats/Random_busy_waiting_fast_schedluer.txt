@@ -1,0 +1,14 @@
+Sono stati eseguiti un totale di 200 task
+
+la media del tempo di attesa prima di entrare in cs e' pari a 1.523588047027588
+
+la varianza invece e' pari a 0.237232994977392
+
+la dev std e' pari a0.48706569883065265
+
+la media del tempo di permanenza in cs e' pari a 0.20065704107284546
+
+la varianza invece e' pari a 0.003116903137762551
+
+la dev std e' pari a 0.05582923192882516
+

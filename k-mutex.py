@@ -1,20 +1,21 @@
+import os
 import threading
 import pymq
 from pymq import EventBus
 from pymq.provider.redis import RedisConfig
 import time
 import random
-import sys
 
 # ConstantimedServer
 K = 5
 N = 10
 BROADCAST = 1899
 TIME = 0
-threads = [0]*N
-CHATTY = True
-is_finished = 0
+CHATTY = False
 SERVER = 0xcafe
+
+threads = [0]*N
+is_finished = 0
 
 class Counter:
 	c = 0
@@ -61,6 +62,10 @@ class TimeServer:
 	
 	# Periodically sends GO messages to random processes
 	def timed_countdown(self):
+
+		# cwd = os.getcwd()  # Get the current working directory (cwd)
+		# files = os.listdir(cwd)  # Get all the files in that directory
+		# print("Files in %r: %s" % (cwd, files))
 
 		with open('Inputs/values_fast.txt', 'r') as file:
 			values = file.read()
@@ -275,8 +280,8 @@ class Thread:
 		#time.sleep(.5)
 		time.sleep(random.uniform(0.1,0.3))
 		print("cs,"+str(time.time()-t0))
-		if CHATTY:print("inizio a lavora")
-		if CHATTY:print("vaffanculo vado a casa")
+		if CHATTY:print("inizio a lavorare")
+		if CHATTY:print("Finito! Vado a casa")
 
 def thread_function(pid, bus):
 

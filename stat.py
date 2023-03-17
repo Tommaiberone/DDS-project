@@ -1,5 +1,5 @@
 import math
-f = open("k-mutex_stat_values_1.csv",'r')
+f = open("Stats/K-outta-m/Tests/Random_busy_waiting_slow_scheduler.csv",'r')
 tot = 0
 att = {}
 cs = {}
@@ -13,7 +13,7 @@ for riga in f:
 		cs[tot] = float(data[1])
 	
 		
-print("So stati eseguiti un totale di "+str(tot)+" task\n")
+print("Sono stati eseguiti un totale di "+str(tot)+" task\n")
 		
 a = 0
 for elem in att:
@@ -27,7 +27,8 @@ for elem in att:
 var = a/(tot-1)
 
 
-print("la media del tempo di attesa prima di entrare in cs e' pari a "+str(avg)+"\n"+"la varianza invece e' pari a "+str(var)+"\n")
+print("la media del tempo di attesa prima di entrare in cs e' pari a "+str(avg)+"\n")
+print("la varianza invece e' pari a "+str(var)+"\n")
 dev = math.sqrt(var)
 print("la dev std e' pari a"+str(dev)+"\n")
 	
@@ -41,7 +42,8 @@ for elem in cs:
 	a = a + math.pow(cs[elem]-avg,2)
 var = a/(tot-1)
 
-print("la media del tempo di permanenza in cs e' pari a "+str(avg)+"\n"+"la varianza invece e' pari a "+str(var)+"\n")
+print("la media del tempo di permanenza in cs e' pari a "+str(avg)+"\n")
+print("la varianza invece e' pari a "+str(var)+"\n")
 dev = math.sqrt(var)
 print("la dev std e' pari a "+str(dev)+"\n")
 

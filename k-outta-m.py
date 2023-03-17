@@ -9,7 +9,7 @@ import time
 
 
 DEBUG = False
-CHATTY = True
+CHATTY = False
 
 M = 5
 N = 10
@@ -51,7 +51,7 @@ class TimeServer:
 			
 	def timed_countdown(self):
 		
-		with open('Inputs/values_fast.txt', 'r') as file:
+		with open('Inputs/values_slow.txt', 'r') as file:
 			values = file.read()
 			values = values.replace("\n", "").replace("  ", " ").split(" ")
 			float_values = list(map(float, values))
@@ -219,7 +219,7 @@ class Thread:
 							if CHATTY: print("Sono il processo " + str(self.pid) + " e ho finito")
 							is_finished += 1
 							
-							print(is_finished)
+							if DEBUG: print(is_finished)
 
 							if is_finished == N:
 								if CHATTY: print("Sono il processo " + str(self.pid) + " e ESEGUO uno stop")
@@ -281,7 +281,7 @@ class Thread:
 
 		print("att_cs,"+str(time.time() - self.time))
 
-		if CHATTY: print(str(self.pid)+" inizia a lavora con "+str(self.k)+" risorse\n")
+		if CHATTY: print(str(self.pid)+" inizia a lavorare con "+str(self.k)+" risorse\n")
 
 		# self.send("ADD", self.pid, BROKER, 0, self.k)
 		
@@ -289,13 +289,13 @@ class Thread:
 
 		#time.sleep(random.randint(1,10))
 		#time.sleep(0.5)
-		#time.sleep(random.uniform(0.1,2))
+		time.sleep(random.uniform(0.1,0.3))
 		
 		print("cs,"+str(time.time()-t0))
 
 		# self.send("REMOVE", self.pid, BROKER, 0, self.k)
 
-		if CHATTY: print("vaffanculo, "+str(self.pid)+" va a casa\n")
+		if CHATTY: print("Finito! "+str(self.pid)+" va a casa\n")
 
 def thread_function(pid, bus):
 	thread = Thread(bus, pid)
@@ -315,8 +315,8 @@ def main():
 	for i in range(0,N):
 		threads[i].join()
 
-	print("ho fatto i join")
-	print("in totale sono stai inviati "+str(msg_num)+" messaggi")
+	if CHATTY: print("ho fatto i join")
+	if CHATTY: print("in totale sono stai inviati "+str(msg_num)+" messaggi")
 		
 
 if __name__ == '__main__':
