@@ -1,4 +1,3 @@
-import os
 import threading
 import pymq
 from pymq import EventBus
@@ -6,22 +5,23 @@ from pymq.provider.redis import RedisConfig
 import time
 import random
 
-# ConstantimedServer
+#Modify to change behaviour
+DEBUG = False
+CHATTY = False
+CS_RANDOM_SLEEP_01_03 = False
+CS_SLEEP_01 = True
+SCHEDULER = "mid"
+
+# Constants
+BROADCAST = 1899
+SERVER = 0xcafe
 K = 5
 N = 10
-BROADCAST = 1899
-TIME = 0
-CHATTY = False
-SERVER = 0xcafe
 
+#Global variables
 threads = [0]*N
 is_finished = 0
-
-class Counter:
-	c = 0
-	
-pippo = Counter()
-
+message_counter = 0
 
 # Define a message class
 class Msg:
@@ -53,23 +53,29 @@ class TimeServer:
 	# StartimedServer worker threads
 	def start_threads(self, bus):
 
+		global threads
+
 		for i in range(N):
 			threads[i] = threading.Thread(target=thread_function, args=(i, bus))
 			threads[i].start()
-
-		#for i in range(N):
-		#	threads[i].join()
 	
 	# Periodically sends GO messages to random processes
 	def timed_countdown(self):
 
-		# cwd = os.getcwd()  # Get the current working directory (cwd)
-		# files = os.listdir(cwd)  # Get all the files in that directory
-		# print("Files in %r: %s" % (cwd, files))
+		#Decide which Scheduler to use
+		if SCHEDULER == "fast":	
+			scheduler = "Inputs/values_fast.txt"
 
-		with open('Inputs/values_fast.txt', 'r') as file:
+		elif SCHEDULER == "mid":	
+			scheduler = "Inputs/values_mid.txt"
+
+		else:	
+			scheduler = "Inputs/values_slow.txt"	
+
+		#Begin scheduling
+		with open(scheduler, 'r') as file:
 			values = file.read()
-			values = values.replace("\n", "").replace("  ", " ").split(" ")
+			values = values.replace("\n", "").replace("  ", " ").strip().split(" ")
 			float_values = list(map(float, values))
 
 			with open('Inputs/processes.txt', 'r') as file2:
@@ -142,6 +148,7 @@ class Thread:
 	def handle_message(self, message : Msg):
 
 		global is_finished
+		global message_counter
 
 		# If the message is addressed to this process or is a broadcast
 		if message.dest == self.pid or message.dest == BROADCAST:
@@ -179,7 +186,7 @@ class Thread:
 						# Grant the request by sending a REPLY message
 						self.send("REPLY",self.pid,message.mit,self.maxseq,1+self.def_c[message.mit])
 						self.def_c[message.mit] = 0
-						pippo.c+=1
+						message_counter+=1
 
 				      # Check if the message is a reply to a request for the critical section
 				elif message.kind == "REPLY":
@@ -193,7 +200,7 @@ class Thread:
 						self.req_cs = False
 						if CHATTY: print("sono" + str(self.pid) + "e entro in cs\n")
 						
-						print("att_cs"+","+str( time.time() - self.time))
+						print("att_cs,"+str( time.time() - self.time))
 						
 						self.cs = True
 
@@ -204,7 +211,7 @@ class Thread:
 						for i in range(0, N):
 							if self.def_c[i] != 0:
 								self.send("REPLY", self.pid, i, self.maxseq, self.def_c[i])
-								pippo.c +=1
+								message_counter +=1
 								self.def_c[i] = 0
 
 						if len(self.queue) != 0 and self.queue[0].kind == "STOP":
@@ -223,29 +230,32 @@ class Thread:
 				# Check if the message is a signal to request access to the critical section
 				elif message.kind == "GO":
 
-					if self.req_cs or self.cs:
+					if self.cs:
 						self.queue.append(message)
 
 					else:
 						self.send_request()
 
-					
-
-
 	def send_request(self):
 
+		global message_counter
+
 		self.time = time.time()
+		print("req_cs")
 		
 		# Update the request variables
 		self.req_cs = True
 		self.seq = self.maxseq + 1
+
 		if CHATTY: print("sono"+str(self.pid)+"e mando una req\n")
+
 		# Send a request message to all processes and update the reply_count variable
 		self.send("REQ", self.pid, BROADCAST, self.seq, 0)
-		pippo.c+=N-1
+		message_counter += N-1
 		
 		for i in range(0, N):
 			self.reply_count[i] += 1
+
 			
 	def send(self, kind: str, mit: int, dest: int, seq: int, num: int):
 
@@ -267,7 +277,7 @@ class Thread:
 		c = 0
 
 		for i in range(0, N):
-			#print(self.reply_count[i])
+			if DEBUG: print(self.reply_count[i])
 			if i != self.pid and self.reply_count[i] == 0:
 				c += 1
 
@@ -275,12 +285,16 @@ class Thread:
 		
 	def do_cs_stuff(self):
 
+		if CHATTY:print("inizio a lavorare")
+		
 		# Define a function that simulates the process performing some critical section work
 		t0 = time.time()
-		#time.sleep(.5)
-		time.sleep(random.uniform(0.1,0.3))
+
+		if CS_SLEEP_01: 			time.sleep(.1)
+		if CS_RANDOM_SLEEP_01_03: 	time.sleep(random.uniform(0.1,0.3))
+
 		print("cs,"+str(time.time()-t0))
-		if CHATTY:print("inizio a lavorare")
+		
 		if CHATTY:print("Finito! Vado a casa")
 
 def thread_function(pid, bus):
@@ -290,6 +304,8 @@ def thread_function(pid, bus):
 
 def main():
 
+	global threads
+
 	# Initialize the message bus and the time server
 	bus = pymq.init(RedisConfig())
 	timedServer = TimeServer(bus)
@@ -297,15 +313,13 @@ def main():
 	timedServer.start_threads(bus)
 	timedServer.timed_countdown()
 
-	TIME = time.time()
-
 	while is_finished != N:
 		time.sleep(1)
 	
 	for i in range(0,N):
 		threads[i].join()
 	
-	print("In totale sono stati inviati "+str(pippo.c)+" messaggi")
+	print("In totale sono stati inviati "+str(message_counter)+" messaggi")
 
 if __name__ == '__main__':
     main()

@@ -1,24 +1,28 @@
-from ast import List
-import sys
 import threading
 import pymq
 from pymq import EventBus
 from pymq.provider.redis import RedisConfig
-import random
 import time
+import random
 
-
+#Modify to change behaviour
 DEBUG = False
 CHATTY = False
+CS_RANDOM_SLEEP_01_03 = True
+CS_SLEEP_01 = False
+SCHEDULER = "mid"
 
+#Constants
 M = 5
 N = 10
 BROKER = 1293
 BROADCAST = 1899
-threads = [0]*N
-msg_num = 0
-is_finished = 0
 SERVER = 0xcafe
+
+#Global variables
+threads = [0]*N
+messageCounter = 0
+is_finished = 0
 
 class Msg:
 	
@@ -38,22 +42,33 @@ class TimeServer:
 	def handle_message(self,message : Msg):
 		return
 	
-	
 	def __init__(self, bus: EventBus):
 		self.bus = bus
 		self.bus.subscribe(self.handle_message)
 
 	def start_threads(self,bus):
 
+		global threads
+
 		for i in range(0, N):
 			threads[i] = threading.Thread(target = thread_function, args=(i, bus))
 			threads[i].start()
 			
 	def timed_countdown(self):
+
+		#Decide which Scheduler to use
+		if SCHEDULER == "fast":	
+			scheduler = "Inputs/values_fast.txt"
+
+		elif SCHEDULER == "mid":	
+			scheduler = "Inputs/values_mid.txt"
+
+		else:	
+			scheduler = "Inputs/values_slow.txt"	
 		
-		with open('Inputs/values_slow.txt', 'r') as file:
+		with open(scheduler, 'r') as file:
 			values = file.read()
-			values = values.replace("\n", "").replace("  ", " ").split(" ")
+			values = values.replace("\n", "").replace("  ", " ").strip().split(" ")
 			float_values = list(map(float, values))
 
 			with open('Inputs/processes.txt', 'r') as file2:
@@ -65,7 +80,6 @@ class TimeServer:
 				for i in range(len(float_values)):
 
 					timeout = float_values[i]
-					#print(int_processes[i])
 					random_process = int_processes[i]
 					
 					time.sleep(timeout)
@@ -147,10 +161,8 @@ class Thread:
 
 	def handle_message(self,message : Msg):
 		
-		global msg_num
+		global messageCounter
 		global is_finished
-		
-		#print(message.dest)
 		
 		if message.dest == self.pid or message.dest == BROADCAST:
 			
@@ -177,16 +189,13 @@ class Thread:
 
 					if ( self.prio!=True or message.mit in self.delayed):
 						self.send("FREE",self.pid,message.mit,self.maxh,M)
-						msg_num+=1
-						"""else:
-						if message.mit in delayed:
-							self.send("FREE",self.pid,message.mit,self.maxh,M)"""			
+						messageCounter+=1
 						
 					else:
 						
 						if self.k != M:
 							self.send("FREE",self.pid,message.mit,self.maxh,M-self.k)
-							msg_num+=1
+							messageCounter+=1
 						self.delayed.append(message.mit)
 								
 				elif message.kind == "FREE":
@@ -203,13 +212,16 @@ class Thread:
 						
 						if CHATTY:
 							print("sono " + str(self.pid)+" e sono in cs")
+
+						print("att_cs,"+str(time.time() - self.time))
 						
 						self.do_cs_stuff()
+
 						self.ok = False
 						
 						for i in range(0,len(self.delayed)):
 							self.send("FREE",self.pid,self.delayed[i],self.maxh,self.k)
-							msg_num+=1
+							messageCounter+=1
 
 						self.delayed = []
 						self.k = 0
@@ -233,7 +245,7 @@ class Thread:
 
 				elif message.kind == "GO":
 					
-					if self.scdem or self.ok:
+					if self.ok:
 						self.queue.append(message)
 
 					else:
@@ -241,7 +253,9 @@ class Thread:
 
 	def send_request(self, message):
 		
-		global msg_num
+		global messageCounter
+
+		print("req_cs")
 
 		self.time = time.time()
 					
@@ -257,7 +271,7 @@ class Thread:
 				self.used[i]+=M
 
 		self.send("REQ",self.pid, BROADCAST, self.h, self.k)
-		msg_num += N-1
+		messageCounter += N-1
 
 
 	def send(self,kind :str,mit :int,dest : int, h : int, num : int):
@@ -279,21 +293,14 @@ class Thread:
 		
 	def do_cs_stuff(self):
 
-		print("att_cs,"+str(time.time() - self.time))
-
 		if CHATTY: print(str(self.pid)+" inizia a lavorare con "+str(self.k)+" risorse\n")
-
-		# self.send("ADD", self.pid, BROKER, 0, self.k)
 		
 		t0 = time.time()
 
-		#time.sleep(random.randint(1,10))
-		#time.sleep(0.5)
-		time.sleep(random.uniform(0.1,0.3))
+		if CS_SLEEP_01: 			time.sleep(.1)
+		if CS_RANDOM_SLEEP_01_03: 	time.sleep(random.uniform(0.1,0.3))
 		
 		print("cs,"+str(time.time()-t0))
-
-		# self.send("REMOVE", self.pid, BROKER, 0, self.k)
 
 		if CHATTY: print("Finito! "+str(self.pid)+" va a casa\n")
 
@@ -302,6 +309,8 @@ def thread_function(pid, bus):
 
 
 def main():
+
+	global threads
 
 	#start threads
 	bus = pymq.init(RedisConfig())
@@ -316,7 +325,7 @@ def main():
 		threads[i].join()
 
 	if CHATTY: print("ho fatto i join")
-	if CHATTY: print("in totale sono stai inviati "+str(msg_num)+" messaggi")
+	if CHATTY: print("in totale sono stai inviati "+str(messageCounter)+" messaggi")
 		
 
 if __name__ == '__main__':
