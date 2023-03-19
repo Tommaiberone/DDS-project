@@ -8,9 +8,9 @@ import random
 #Modify to change behaviour
 DEBUG = False
 CHATTY = False
-CS_RANDOM_SLEEP_01_03 = True
+CS_RANDOM_SLEEP_01_03 = False
 CS_SLEEP_01 = False
-SCHEDULER = "mid"
+SCHEDULER = "slow"
 
 #Constants
 M = 5
@@ -75,7 +75,6 @@ class TimeServer:
 				processes = file2.read()
 				processes = processes.replace("\n", "").split(" ")
 				int_processes = list(map(int, processes))
-				#print(int_processes)
 
 				for i in range(len(float_values)):
 
@@ -91,7 +90,6 @@ class TimeServer:
 					msg.dest = random_process
 					msg.h = 0
 					msg.k = 1
-					
 
 					self.bus.publish(msg)
 
@@ -103,7 +101,6 @@ class TimeServer:
 				msg.k = 1
 
 				self.bus.publish(msg)
-
 
 	def handle_message(self, message : Msg) :
 
@@ -324,8 +321,8 @@ def main():
 	for i in range(0,N):
 		threads[i].join()
 
-	if CHATTY: print("ho fatto i join")
-	if CHATTY: print("in totale sono stai inviati "+str(messageCounter)+" messaggi")
+	print("ho fatto i join")
+	print("in totale sono stai inviati "+str(messageCounter)+" messaggi")
 		
 
 if __name__ == '__main__':

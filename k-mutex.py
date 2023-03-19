@@ -8,8 +8,8 @@ import random
 #Modify to change behaviour
 DEBUG = False
 CHATTY = False
-CS_RANDOM_SLEEP_01_03 = False
-CS_SLEEP_01 = True
+CS_RANDOM_SLEEP_01_03 = True
+CS_SLEEP_01 = False
 SCHEDULER = "mid"
 
 # Constants
@@ -180,6 +180,14 @@ class Thread:
 
 						# Defer the request if this process is in the critical section
 						# or has already requested the critical section with a higher sequence number
+						
+
+						###WE GOT A PROBLEM, sta parte non viene mai eseguita
+
+
+
+
+						print("PROVAAAA\n\n\n\n\n\n\n\n\n")
 						self.def_c[message.mit] +=1
 					else:
 
@@ -209,6 +217,10 @@ class Thread:
 						
 						# Send replies to deferred requestimedServer
 						for i in range(0, N):
+
+							if self.def_c[i] > 1:
+								print("CIAOOOO\n\n\n\n\n\n\n\n")
+
 							if self.def_c[i] != 0:
 								self.send("REPLY", self.pid, i, self.maxseq, self.def_c[i])
 								message_counter +=1

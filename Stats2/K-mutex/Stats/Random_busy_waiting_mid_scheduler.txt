@@ -1,0 +1,18 @@
+In totale sono stati inviati 3600 messaggi
+
+Sono state mandate un totale di 200 richieste
+
+La CS è stata acceduta 14 volte
+
+la media del tempo di attesa prima di entrare in cs e' pari a 0.016831724643707274
+
+la varianza invece e' pari a 0.030465101217104176
+
+la dev std e' pari a0.1745425484433643
+
+la media del tempo di permanenza in cs e' pari a 0.0038300621509552
+
+la varianza invece e' pari a 0.0007567323131676998
+
+la dev std e' pari a 0.027508767932564696
+

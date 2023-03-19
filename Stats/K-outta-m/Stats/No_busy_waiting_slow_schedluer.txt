@@ -1,3 +1,5 @@
+In totale sono stati inviati 3600 messaggi
+
 Sono stati eseguiti un totale di 200 task
 
 la media del tempo di attesa prima di entrare in cs e' pari a 0.020730780363082887

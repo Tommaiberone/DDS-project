@@ -1,6 +1,6 @@
 import math
-# f = open("Stats/K-outta-m/Tests/Random_busy_waiting_slow_scheduler.csv",'r')
-f = open("temp.csv",'r')
+f = open("Stats2/K-outta-m/Tests/No_busy_waiting_slow_scheduler.csv",'r')
+# f = open("temp.csv",'r')
 numberOfRequests = 0
 numberOfEnteringsInCS = 0
 waitingTimesDictionary = {}
