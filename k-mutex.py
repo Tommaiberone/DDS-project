@@ -12,10 +12,11 @@ TEST = True
 CS_RANDOM_SLEEP_01_03 = True
 CS_SLEEP_01 = False
 SCHEDULER = "mid"
-MULTIPLE_REQUESTS_ALLOWED = False
+MULTIPLE_REQUESTS_ALLOWED = True
 
 # Constants
 BROADCAST = 1899
+CSSERVER = 0xbeef
 SERVER = 0xcafe
 K = 5
 N = 10
@@ -32,6 +33,48 @@ class Msg:
 	dest: int
 	seq : int
 	num_rep : int
+
+class CSServer:
+
+	bus : EventBus
+
+	def __init__(self, bus: EventBus):
+
+		self.bus = bus
+		self.bus.subscribe(self.handleMessage)
+
+	def handleMessage(self, message: Msg):
+
+		if message.dest == CSSERVER:
+
+			pid = message.mit
+			threading.Thread(target = self.manageCS, args = (self.bus, pid)).start()
+
+		return
+	
+	def manageCS(self, bus, pid):
+
+		if CHATTY: print(str(pid)+" inizia a lavorare")
+		
+		t0 = time.time()
+
+		if CS_SLEEP_01: 			time.sleep(.1)
+		if CS_RANDOM_SLEEP_01_03: 	time.sleep(random.uniform(0.1,0.3))
+
+		msg = Msg()
+		msg.kind = "STOP_CS"
+		msg.mit = CSSERVER
+		msg.dest = pid
+		msg.h = 0
+		msg.k = 0
+
+		bus.publish(msg)
+
+		if TEST: print("cs,"+str(time.time()-t0))
+
+		if CHATTY: 	print("Finito! "+str(pid)+" va a casa\n")
+
+		return
 
 # Define a TimeServer class
 class TimeServer:
@@ -182,7 +225,10 @@ class Thread:
 
 						# Defer the request if this process is in the critical section
 						# or has already requested the critical section with a higher sequence number
+
 						self.def_c[message.mit] +=1
+
+						# print(self.def_c[message.mit])
 
 					else:
 
@@ -205,10 +251,36 @@ class Thread:
 						
 						if TEST: print("att_cs,"+str( time.time() - self.time))
 						
-						self.cs = True
-						self.do_cs_stuff()
-						self.cs = False
 						
+						self.send("CS_ENTER",self.pid,CSSERVER,0,0)
+
+						self.cs = True
+						# self.do_cs_stuff()
+						# self.cs = False
+								
+				# Check if the message is a signal to request access to the critical section
+				elif message.kind == "GO":
+
+					if (MULTIPLE_REQUESTS_ALLOWED):
+
+						if self.cs:
+							self.queue.append(message)
+
+						else:
+							self.send_request()
+
+					else:
+
+						if self.cs or self.req_cs:
+							self.queue.append(message)
+
+						else:
+							self.send_request()
+
+				elif message.kind == "STOP_CS":
+
+						self.cs = False
+
 						# Send replies to deferred requestimedServer
 						for i in range(0, N):
 
@@ -229,25 +301,6 @@ class Thread:
 						elif len(self.queue) != 0 and self.queue[0].kind == "GO":
 							self.send_request()
 							self.queue.pop(0)
-								
-				# Check if the message is a signal to request access to the critical section
-				elif message.kind == "GO":
-
-					if (MULTIPLE_REQUESTS_ALLOWED):
-
-						if self.cs:
-							self.queue.append(message)
-
-						else:
-							self.send_request()
-
-					else:
-
-						if self.cs or self.req_cs:
-							self.queue.append(message)
-
-						else:
-							self.send_request()
 
 	def send_request(self):
 
@@ -290,30 +343,34 @@ class Thread:
 		c = 0
 
 		for i in range(0, N):
-			if DEBUG: print(self.reply_count[i])
+			# if DEBUG: print(self.reply_count[i])
 			if i != self.pid and self.reply_count[i] == 0:
 				c += 1
 
 		return c
 		
-	def do_cs_stuff(self):
+	# def do_cs_stuff(self):
 
-		if CHATTY:print("inizio a lavorare")
+		# if CHATTY:print("inizio a lavorare")
 		
-		# Define a function that simulates the process performing some critical section work
-		t0 = time.time()
+		# # Define a function that simulates the process performing some critical section work
+		# t0 = time.time()
 
-		if CS_SLEEP_01: 			time.sleep(.1)
-		if CS_RANDOM_SLEEP_01_03: 	time.sleep(random.uniform(0.1,0.3))
+		# if CS_SLEEP_01: 			time.sleep(.1)
+		# if CS_RANDOM_SLEEP_01_03: 	time.sleep(random.uniform(0.1,0.3))
 
-		if TEST: print("cs,"+str(time.time()-t0))
+		# if TEST: print("cs,"+str(time.time()-t0))
 		
-		if CHATTY:print("Finito! Vado a casa")
+		# if CHATTY:print("Finito! Vado a casa")
 
 def thread_function(pid, bus):
 
 	# Define a function that runs a thread for a specific process ID and message bus
 	thread = Thread(bus, pid)
+
+def csServerFunction(bus : EventBus):
+
+	csServer = CSServer(bus)
 
 def main():
 
@@ -321,6 +378,10 @@ def main():
 
 	# Initialize the message bus and the time server
 	bus = pymq.init(RedisConfig())
+	
+	csServer = threading.Thread(target=csServerFunction, args= (bus,))
+	csServer.start()
+
 	timedServer = TimeServer(bus)
 	
 	timedServer.start_threads(bus)

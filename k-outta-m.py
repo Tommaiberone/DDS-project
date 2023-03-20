@@ -6,13 +6,14 @@ import time
 import random
 
 #Modify to change behaviour
-DEBUG = False
-CHATTY = False
+SUPERDEBUG = True
+DEBUG = True
+CHATTY = True
 TEST = True
-CS_RANDOM_SLEEP_01_03 = True
+CS_RANDOM_SLEEP_01_03 = False
 CS_SLEEP_01 = False
 SCHEDULER = "mid"
-MULTIPLE_REQUESTS_ALLOWED = False
+MULTIPLE_REQUESTS_ALLOWED = True
 
 #Constants
 M = 5
@@ -20,6 +21,7 @@ N = 10
 BROKER = 1293
 BROADCAST = 1899
 SERVER = 0xcafe
+CSSERVER = 0xbeef
 
 #Global variables
 threads = [0]*N
@@ -33,6 +35,51 @@ class Msg:
 	dest: int
 	h : int
 	k : int
+
+class CSServer:
+
+	bus : EventBus
+
+	def __init__(self, bus: EventBus):
+
+		self.bus = bus
+		self.bus.subscribe(self.handleMessage)
+
+	def handleMessage(self, message: Msg):
+
+		if message.dest == CSSERVER:
+
+			pid = message.mit
+			threading.Thread(target = self.manageCS, args = (self.bus, pid)).start()
+
+		return
+	
+	def manageCS(self, bus, pid):
+		
+		if CHATTY: print(str(pid)+" inizia a lavorare")
+		
+		t0 = time.time()
+
+		if CS_SLEEP_01: 			time.sleep(.1)
+		if CS_RANDOM_SLEEP_01_03: 	time.sleep(random.uniform(0.1,0.3))
+
+		msg = Msg()
+		msg.kind = "STOP_CS"
+		msg.mit = CSSERVER
+		msg.dest = pid
+		msg.h = 0
+		msg.k = 0
+
+		bus.publish(msg)
+
+		print("mandato messaggio per uscire")
+
+		if TEST: print("cs,"+str(time.time()-t0))
+
+		if CHATTY: 	print("Finito! "+str(pid)+" va a casa\n")
+
+		return
+
 
 class TimeServer:
 	
@@ -112,8 +159,9 @@ class TimeServer:
 
 				self.threads_in_cs.append(message.mit)
 
-				if DEBUG: print("I processi attualmente in cs sono: ")
-				if DEBUG: print(self.threads_in_cs)
+				if DEBUG: 
+					print("I processi attualmente in cs sono: ")
+					print(self.threads_in_cs)
 
 			else:
 
@@ -198,13 +246,9 @@ class Thread:
 						self.delayed.append(message.mit)
 								
 				elif message.kind == "FREE":
-					self.used[message.mit] -= message.k
-					if DEBUG: print("sono "+str(self.pid)+", ", message.mit, " mi ha liberato ", message.k, " risorse")
 
-					if DEBUG: 
-						if self.scdem and (self.sum_used() + self.k) > M:
-							if DEBUG: print("sono "+str(self.pid)+", ho richiesto "+str(self.k) + ", ma ci sono solo " + str(max(0,M - self.sum_used())) + " liberi")
-					
+					self.used[message.mit] -= message.k
+
 					if self.scdem and (self.sum_used() + self.k) <= M:
 						self.scdem = False
 						self.ok = True
@@ -214,33 +258,16 @@ class Thread:
 
 						if TEST: print("att_cs,"+str(time.time() - self.time))
 						
-						self.do_cs_stuff()
+						self.send("START_CS", self.pid, CSSERVER, 0, 0)
 
-						self.ok = False
-						
-						for i in range(0,len(self.delayed)):
-							self.send("FREE",self.pid,self.delayed[i],self.maxh,self.k)
-							messageCounter+=1
+					if DEBUG: 
+						print("sono "+str(self.pid)+", ", message.mit, " mi ha liberato ", message.k, " risorse")
+					
+					if SUPERDEBUG and self.scdem and (self.sum_used() + self.k) > M:
+						print("sono "+str(self.pid)+", ho richiesto "+str(self.k) + ", ma ci sono solo " + str(max(0,M - self.sum_used())) + " liberi")
+					
 
-						self.delayed = []
-						self.k = 0
-
-						if len(self.queue) != 0 and self.queue[0].kind == "STOP":
-							
-							if CHATTY: print("Sono il processo " + str(self.pid) + " e ho finito")
-							is_finished += 1
-							
-							if DEBUG: print(is_finished)
-
-							if is_finished == N:
-								if CHATTY: print("Sono il processo " + str(self.pid) + " e ESEGUO uno stop")
-								self.self_destroy()
-						
-						elif len(self.queue) != 0 and self.queue[0].kind == "GO":
-							self.send_request(self.queue[0])
-							self.queue.pop(0)
-
-
+					# self.do_cs_stuff()
 
 				elif message.kind == "GO":
 					
@@ -259,6 +286,34 @@ class Thread:
 
 						else:
 							self.send_request(message)
+
+				elif message.kind == "STOP_CS":
+
+					print("ricevuto messaggio per uscire")
+
+					self.ok = False
+						
+					for i in range(0,len(self.delayed)):
+						self.send("FREE",self.pid,self.delayed[i],self.maxh,self.k)
+						messageCounter+=1
+
+					self.delayed = []
+					self.k = 0
+
+					if len(self.queue) != 0 and self.queue[0].kind == "STOP":
+						
+						if CHATTY: print("Sono il processo " + str(self.pid) + " e ho finito")
+						is_finished += 1
+						
+						if DEBUG: print(is_finished)
+
+						if is_finished == N:
+							if CHATTY: print("Sono il processo " + str(self.pid) + " e ESEGUO uno stop")
+							self.self_destroy()
+					
+					elif len(self.queue) != 0 and self.queue[0].kind == "GO":
+						self.send_request(self.queue[0])
+						self.queue.pop(0)
 
 	def send_request(self, message):
 		
@@ -300,22 +355,19 @@ class Thread:
 		return s
 					
 		
-	def do_cs_stuff(self):
+	# def do_cs_stuff(self):
 
-		if CHATTY: print(str(self.pid)+" inizia a lavorare con "+str(self.k)+" risorse\n")
+	# 	if CS_SLEEP_01: 			time.sleep(.1)
+	# 	if CS_RANDOM_SLEEP_01_03: 	time.sleep(random.uniform(0.1,0.3))
 		
-		t0 = time.time()
-
-		if CS_SLEEP_01: 			time.sleep(.1)
-		if CS_RANDOM_SLEEP_01_03: 	time.sleep(random.uniform(0.1,0.3))
-		
-		if TEST: print("cs,"+str(time.time()-t0))
-
-		if CHATTY: print("Finito! "+str(self.pid)+" va a casa\n")
 
 def thread_function(pid, bus):
+
 	thread = Thread(bus, pid)
 
+def csServerFunction(bus : EventBus):
+
+	csServer = CSServer(bus)
 
 def main():
 
@@ -323,6 +375,9 @@ def main():
 
 	#start threads
 	bus = pymq.init(RedisConfig())
+
+	threading.Thread(target=csServerFunction, args= (bus,)).start()
+
 	ts=TimeServer(bus)
 	ts.start_threads(bus)
 	ts.timed_countdown()
