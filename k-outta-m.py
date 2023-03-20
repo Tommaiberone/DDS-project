@@ -8,9 +8,11 @@ import random
 #Modify to change behaviour
 DEBUG = False
 CHATTY = False
-CS_RANDOM_SLEEP_01_03 = False
+TEST = True
+CS_RANDOM_SLEEP_01_03 = True
 CS_SLEEP_01 = False
-SCHEDULER = "slow"
+SCHEDULER = "mid"
+MULTIPLE_REQUESTS_ALLOWED = False
 
 #Constants
 M = 5
@@ -210,7 +212,7 @@ class Thread:
 						if CHATTY:
 							print("sono " + str(self.pid)+" e sono in cs")
 
-						print("att_cs,"+str(time.time() - self.time))
+						if TEST: print("att_cs,"+str(time.time() - self.time))
 						
 						self.do_cs_stuff()
 
@@ -242,17 +244,27 @@ class Thread:
 
 				elif message.kind == "GO":
 					
-					if self.ok:
-						self.queue.append(message)
+					if MULTIPLE_REQUESTS_ALLOWED:
+					
+						if self.ok:
+							self.queue.append(message)
+
+						else:
+							self.send_request(message)
 
 					else:
-						self.send_request(message)
+
+						if self.ok or self.scdem:
+							self.queue.append(message)
+
+						else:
+							self.send_request(message)
 
 	def send_request(self, message):
 		
 		global messageCounter
 
-		print("req_cs")
+		if TEST: print("req_cs")
 
 		self.time = time.time()
 					
@@ -297,7 +309,7 @@ class Thread:
 		if CS_SLEEP_01: 			time.sleep(.1)
 		if CS_RANDOM_SLEEP_01_03: 	time.sleep(random.uniform(0.1,0.3))
 		
-		print("cs,"+str(time.time()-t0))
+		if TEST: print("cs,"+str(time.time()-t0))
 
 		if CHATTY: print("Finito! "+str(self.pid)+" va a casa\n")
 

@@ -8,9 +8,11 @@ import random
 #Modify to change behaviour
 DEBUG = False
 CHATTY = False
+TEST = True
 CS_RANDOM_SLEEP_01_03 = True
 CS_SLEEP_01 = False
 SCHEDULER = "mid"
+MULTIPLE_REQUESTS_ALLOWED = False
 
 # Constants
 BROADCAST = 1899
@@ -180,15 +182,8 @@ class Thread:
 
 						# Defer the request if this process is in the critical section
 						# or has already requested the critical section with a higher sequence number
-						
-
-						###WE GOT A PROBLEM, sta parte non viene mai eseguita
-
-
-
-
-						print("PROVAAAA\n\n\n\n\n\n\n\n\n")
 						self.def_c[message.mit] +=1
+
 					else:
 
 						# Grant the request by sending a REPLY message
@@ -208,18 +203,14 @@ class Thread:
 						self.req_cs = False
 						if CHATTY: print("sono" + str(self.pid) + "e entro in cs\n")
 						
-						print("att_cs,"+str( time.time() - self.time))
+						if TEST: print("att_cs,"+str( time.time() - self.time))
 						
 						self.cs = True
-
 						self.do_cs_stuff()
 						self.cs = False
 						
 						# Send replies to deferred requestimedServer
 						for i in range(0, N):
-
-							if self.def_c[i] > 1:
-								print("CIAOOOO\n\n\n\n\n\n\n\n")
 
 							if self.def_c[i] != 0:
 								self.send("REPLY", self.pid, i, self.maxseq, self.def_c[i])
@@ -242,18 +233,28 @@ class Thread:
 				# Check if the message is a signal to request access to the critical section
 				elif message.kind == "GO":
 
-					if self.cs:
-						self.queue.append(message)
+					if (MULTIPLE_REQUESTS_ALLOWED):
+
+						if self.cs:
+							self.queue.append(message)
+
+						else:
+							self.send_request()
 
 					else:
-						self.send_request()
+
+						if self.cs or self.req_cs:
+							self.queue.append(message)
+
+						else:
+							self.send_request()
 
 	def send_request(self):
 
 		global message_counter
 
 		self.time = time.time()
-		print("req_cs")
+		if TEST: print("req_cs")
 		
 		# Update the request variables
 		self.req_cs = True
@@ -305,7 +306,7 @@ class Thread:
 		if CS_SLEEP_01: 			time.sleep(.1)
 		if CS_RANDOM_SLEEP_01_03: 	time.sleep(random.uniform(0.1,0.3))
 
-		print("cs,"+str(time.time()-t0))
+		if TEST: print("cs,"+str(time.time()-t0))
 		
 		if CHATTY:print("Finito! Vado a casa")
 
