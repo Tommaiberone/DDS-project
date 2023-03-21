@@ -1,5 +1,5 @@
 import math
-f = open("Stats2/K-mutex/Tests/Random_busy_waiting_mid_scheduler.csv",'r')
+f = open("Stats2/K-outta-m/Tests/Random_busy_waiting_mid_scheduler.csv",'r')
 #f = open("temp.csv",'r')
 numberOfRequests = 0
 numberOfEnteringsInCS = 0
