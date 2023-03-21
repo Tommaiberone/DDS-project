@@ -26,9 +26,11 @@ This study will start with a brief analysis of the two algorithms and their func
 situation will be examined in which the two algorithms actually end up solving the same problem.
 An analysis will be conducted on the behavior of the two algorithms in this specific setup, to investigate
 how the performance of these two approaches compare when these parameters vary:
+
 ● Time spent in critical section: The time spent in the critical section affects the throughput of the
 algorithm. It can be modified by setting a random interval for the time spent in the critical
 section.
+
 ● Workload: The workload represents the rate of requests for the critical section or resources. This
 parameter can be modified by setting different rates of requests.
 The following metrics will be measured to evaluate the performance of the algorithms:
@@ -38,6 +40,7 @@ The following metrics will be measured to evaluate the performance of the algori
 enter the critical section.
 ● Number of messages: This metric measures the number of messages exchanged between threads
 during the execution of the algorithm.
+
 Then the dependability of the two algorithms will be analyzed, in particular wrt how they handle faults,
 such as thread crashes, message losses, and network failures. The two approaches used by these
 algorithms will also be briefly compared to other approaches found in the literature.
