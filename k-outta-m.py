@@ -6,11 +6,11 @@ import time
 import random
 
 #Modify to change behaviour
-SUPERDEBUG = True
-DEBUG = True
-CHATTY = True
+SUPERDEBUG = False
+DEBUG = False
+CHATTY = False
 TEST = True
-CS_RANDOM_SLEEP_01_03 = False
+CS_RANDOM_SLEEP_01_03 = True
 CS_SLEEP_01 = False
 SCHEDULER = "mid"
 MULTIPLE_REQUESTS_ALLOWED = True

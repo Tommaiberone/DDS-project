@@ -2,601 +2,1001 @@ req_cs
 req_cs
 req_cs
 req_cs
-att_cs,0.0618891716003418
-req_cs
-req_cs
-att_cs,0.10277438163757324
-req_cs
-att_cs,0.14339756965637207
-req_cs
-att_cs,0.17946791648864746
-req_cs
-att_cs,0.21067595481872559
-cs,0.12494540214538574
-cs,0.21429753303527832
-cs,0.29039716720581055
-req_cs
-req_cs
-req_cs
-att_cs,0.3346116542816162
-att_cs,0.36392879486083984
-att_cs,0.4623987674713135
-cs,0.2922077178955078
-cs,0.23443913459777832
-req_cs
-req_cs
-att_cs,0.4761221408843994
-att_cs,0.29377150535583496
-cs,0.16766762733459473
-cs,0.20376992225646973
-cs,0.2726151943206787
-req_cs
-req_cs
-req_cs
-att_cs,0.42729663848876953
-att_cs,0.4948291778564453
-att_cs,0.27111268043518066
-cs,0.20744872093200684
-cs,0.2841033935546875
-req_cs
-req_cs
-att_cs,0.44336819648742676
-att_cs,0.30177903175354004
-cs,0.1933155059814453
-cs,0.11407852172851562
-cs,0.20545053482055664
-req_cs
-req_cs
-req_cs
-att_cs,0.43737244606018066
-att_cs,0.46654725074768066
-att_cs,0.2596147060394287
-cs,0.1730949878692627
-cs,0.2448890209197998
-req_cs
-req_cs
-att_cs,0.4032893180847168
-att_cs,0.3286740779876709
-cs,0.2667696475982666
-req_cs
-att_cs,0.43932676315307617
-cs,0.23201394081115723
-req_cs
-att_cs,0.4421656131744385
-cs,0.31034278869628906
-cs,0.1517941951751709
-req_cs
-req_cs
-att_cs,0.2991757392883301
-att_cs,0.3111143112182617
-cs,0.1321556568145752
-req_cs
-att_cs,0.22096729278564453
-cs,0.2845165729522705
-cs,0.16010713577270508
-req_cs
-req_cs
-att_cs,0.2497386932373047
-att_cs,0.20695900917053223
-cs,0.15500354766845703
-cs,0.18082809448242188
-req_cs
-req_cs
-att_cs,0.2992849349975586
-att_cs,0.2094869613647461
-cs,0.25229549407958984
-cs,0.17818069458007812
-req_cs
-req_cs
-cs,0.1730031967163086
-att_cs,0.27215147018432617
-att_cs,0.27401304244995117
-req_cs
-cs,0.1672062873840332
-att_cs,0.24912238121032715
-cs,0.20028233528137207
-req_cs
-att_cs,0.30544567108154297
-req_cs
-cs,0.10888552665710449
-att_cs,0.20473551750183105
-req_cs
-att_cs,0.2721109390258789
-cs,0.12900900840759277
-req_cs
-att_cs,0.25822997093200684
-cs,0.2962348461151123
-req_cs
-att_cs,0.20221543312072754
-cs,0.10681462287902832
-req_cs
-att_cs,0.3159151077270508
-cs,0.30087828636169434
-req_cs
-att_cs,0.27346348762512207
-cs,0.22421550750732422
-req_cs
-att_cs,0.2704951763153076
-cs,0.3197593688964844
-req_cs
-att_cs,0.2531275749206543
-cs,0.2834930419921875
-req_cs
-att_cs,0.249373197555542
-cs,0.23383116722106934
-cs,0.1273510456085205
-req_cs
-req_cs
-att_cs,0.2664170265197754
-att_cs,0.25855422019958496
-cs,0.2702779769897461
-cs,0.18758320808410645
-req_cs
-cs,0.11967253684997559
-req_cs
-att_cs,0.2889845371246338
-req_cs
-att_cs,0.21460437774658203
-att_cs,0.1891641616821289
-cs,0.14504313468933105
-cs,0.1965923309326172
-req_cs
-req_cs
-att_cs,0.2898890972137451
-att_cs,0.1893460750579834
-cs,0.10184979438781738
-cs,0.12265300750732422
-req_cs
-req_cs
-att_cs,0.28487181663513184
-cs,0.20565152168273926
-att_cs,0.2622814178466797
-req_cs
-att_cs,0.21308088302612305
-cs,0.1643683910369873
-req_cs
-att_cs,0.2566258907318115
-cs,0.22462201118469238
-req_cs
-att_cs,0.21205639839172363
-cs,0.15957283973693848
-req_cs
-att_cs,0.2657203674316406
-cs,0.19179940223693848
-req_cs
-att_cs,0.2637796401977539
-cs,0.23271560668945312
-req_cs
-att_cs,0.2442762851715088
-cs,0.16641831398010254
-cs,0.23743224143981934
-req_cs
-req_cs
-att_cs,0.23036932945251465
-att_cs,0.22457480430603027
-cs,0.13400959968566895
-req_cs
-att_cs,0.24094104766845703
-cs,0.2841668128967285
-req_cs
-att_cs,0.22209405899047852
-cs,0.15436339378356934
-cs,0.23858404159545898
-req_cs
-att_cs,0.22257137298583984
-req_cs
-att_cs,0.24613285064697266
-cs,0.20991158485412598
-req_cs
-att_cs,0.22437524795532227
-cs,0.21285462379455566
-req_cs
-att_cs,0.22631096839904785
-cs,0.17847394943237305
-req_cs
-att_cs,0.22215485572814941
-cs,0.2901756763458252
-req_cs
-att_cs,0.2526676654815674
-cs,0.23411273956298828
-cs,0.18245577812194824
-req_cs
-req_cs
-att_cs,0.22952938079833984
-att_cs,0.21263909339904785
-cs,0.23281192779541016
-req_cs
-att_cs,0.22094297409057617
-cs,0.20537090301513672
-req_cs
-att_cs,0.2221219539642334
-cs,0.19669079780578613
-req_cs
-cs,0.13215160369873047
-att_cs,0.21574902534484863
-req_cs
-att_cs,0.27350449562072754
-cs,0.269578218460083
-req_cs
-att_cs,0.24309611320495605
-cs,0.21844053268432617
-req_cs
-att_cs,0.26114583015441895
-cs,0.15234088897705078
-req_cs
-cs,0.25473690032958984
-att_cs,0.2624955177307129
-req_cs
-att_cs,0.2535252571105957
-cs,0.2523949146270752
-req_cs
-att_cs,0.24176430702209473
-cs,0.19237589836120605
-cs,0.13949227333068848
-req_cs
-att_cs,0.26359081268310547
-cs,0.26105165481567383
-req_cs
-req_cs
-att_cs,0.22328567504882812
-cs,0.20623278617858887
-att_cs,0.30490994453430176
-req_cs
-att_cs,0.3157346248626709
-cs,0.2642645835876465
-cs,0.20886588096618652
-req_cs
-req_cs
-att_cs,0.3112149238586426
-cs,0.13014793395996094
-att_cs,0.322005033493042
-cs,0.10445880889892578
-req_cs
-cs,0.24472761154174805
-req_cs
-att_cs,0.40463829040527344
-req_cs
-att_cs,0.3046913146972656
-att_cs,0.2608509063720703
-cs,0.1654822826385498
-req_cs
-att_cs,0.3919641971588135
-cs,0.286008358001709
-req_cs
-att_cs,0.2933974266052246
-cs,0.1309814453125
-cs,0.221909761428833
-req_cs
-req_cs
-att_cs,0.416492223739624
-cs,0.2134706974029541
-att_cs,0.3519308567047119
-cs,0.15873456001281738
-req_cs
-req_cs
-att_cs,0.32680606842041016
-att_cs,0.29166507720947266
-cs,0.26299095153808594
-req_cs
-att_cs,0.3214564323425293
-cs,0.22764253616333008
-cs,0.1278822422027588
-req_cs
-req_cs
-att_cs,0.37772536277770996
-cs,0.2859151363372803
-att_cs,0.2654430866241455
-req_cs
-cs,0.21789240837097168
-att_cs,0.388164758682251
-req_cs
-cs,0.13774538040161133
-cs,0.2318124771118164
-att_cs,0.28072357177734375
-cs,0.13689517974853516
-req_cs
-req_cs
-req_cs
-att_cs,0.2889997959136963
-att_cs,0.3131747245788574
-att_cs,0.2810478210449219
-cs,0.19744396209716797
-req_cs
-att_cs,0.33202505111694336
-cs,0.24498367309570312
-req_cs
-att_cs,0.3226168155670166
-cs,0.16305828094482422
-cs,0.20314455032348633
-req_cs
-req_cs
-att_cs,0.3801088333129883
-att_cs,0.40065908432006836
-cs,0.22052383422851562
-req_cs
-att_cs,0.2777528762817383
-cs,0.1950078010559082
-req_cs
-att_cs,0.2731015682220459
-cs,0.12440061569213867
-cs,0.28600120544433594
-cs,0.13294291496276855
-req_cs
-req_cs
-att_cs,0.2684621810913086
-req_cs
-att_cs,0.32334136962890625
-att_cs,0.2441098690032959
-cs,0.18502593040466309
-cs,0.2873966693878174
-req_cs
-req_cs
-att_cs,0.30553746223449707
-cs,0.1559286117553711
-att_cs,0.29393625259399414
-cs,0.11368751525878906
-req_cs
-req_cs
-cs,0.25362062454223633
-att_cs,0.4178590774536133
-att_cs,0.4002342224121094
-req_cs
-att_cs,0.35516881942749023
-cs,0.24628853797912598
-req_cs
-att_cs,0.4295926094055176
-cs,0.2868523597717285
-req_cs
-cs,0.22460508346557617
-att_cs,0.4029548168182373
-req_cs
-cs,0.24914288520812988
-att_cs,0.426746129989624
-req_cs
-att_cs,0.37237000465393066
-cs,0.19119954109191895
-cs,0.26750612258911133
-req_cs
-req_cs
-att_cs,0.3364884853363037
-att_cs,0.2962992191314697
-cs,0.2287895679473877
-req_cs
-cs,0.22309660911560059
-att_cs,0.31278085708618164
-req_cs
-att_cs,0.3048574924468994
-cs,0.1434321403503418
-req_cs
-att_cs,0.27459049224853516
-cs,0.29589200019836426
-cs,0.17278289794921875
-req_cs
-req_cs
-att_cs,0.3483912944793701
-att_cs,0.2429800033569336
-cs,0.18213582038879395
-req_cs
-att_cs,0.25202155113220215
-cs,0.15069818496704102
-req_cs
-att_cs,0.24642109870910645
-cs,0.2532532215118408
-req_cs
-att_cs,0.23926019668579102
-cs,0.17862606048583984
-req_cs
-att_cs,0.3188607692718506
-cs,0.26446056365966797
-req_cs
-att_cs,0.2750205993652344
-cs,0.2673227787017822
-req_cs
-att_cs,0.2821471691131592
-cs,0.27947378158569336
-cs,0.2320537567138672
-req_cs
-att_cs,0.3028275966644287
-req_cs
-cs,0.13549089431762695
-att_cs,0.27410364151000977
-cs,0.13089680671691895
-att_cs,0.2659480571746826
-cs,0.29628944396972656
-req_cs
-req_cs
-att_cs,0.23906517028808594
-att_cs,0.17703986167907715
-cs,0.10404014587402344
-req_cs
-att_cs,0.26578211784362793
-cs,0.22903776168823242
-req_cs
-att_cs,0.17207074165344238
-cs,0.23209118843078613
-cs,0.16591620445251465
-req_cs
-req_cs
-att_cs,0.26345038414001465
-att_cs,0.19874882698059082
-cs,0.1594409942626953
-cs,0.24374890327453613
-req_cs
-req_cs
-att_cs,0.23119521141052246
-att_cs,0.12811589241027832
-cs,0.26711559295654297
-req_cs
-att_cs,0.21402645111083984
-cs,0.2002716064453125
-req_cs
-att_cs,0.18245363235473633
-cs,0.2287445068359375
-req_cs
-att_cs,0.21224069595336914
-cs,0.17125606536865234
-req_cs
-att_cs,0.17962431907653809
-cs,0.24587082862854004
-req_cs
-att_cs,0.19022107124328613
-cs,0.14741063117980957
-req_cs
-att_cs,0.19632458686828613
-cs,0.28685832023620605
-cs,0.1151580810546875
-req_cs
-req_cs
-att_cs,0.21858549118041992
-cs,0.29261016845703125
-att_cs,0.16515374183654785
-req_cs
-att_cs,0.17263031005859375
-cs,0.20408105850219727
-cs,0.14350152015686035
-req_cs
-req_cs
-att_cs,0.2069227695465088
-att_cs,0.2340078353881836
-cs,0.222825288772583
-cs,0.19622015953063965
-req_cs
-req_cs
-att_cs,0.24434852600097656
-att_cs,0.18711590766906738
-cs,0.1637270450592041
-req_cs
-att_cs,0.25922513008117676
-cs,0.2967226505279541
-req_cs
-att_cs,0.17983150482177734
-cs,0.22017335891723633
-req_cs
-cs,0.1674056053161621
-att_cs,0.2370319366455078
-cs,0.16431927680969238
-req_cs
-att_cs,0.19536733627319336
-cs,0.1718745231628418
-att_cs,0.16343927383422852
-att_cs,0.1782701015472412
-cs,0.16126203536987305
-req_cs
-att_cs,0.18420886993408203
-cs,0.2826523780822754
-req_cs
-att_cs,0.06201672554016113
-cs,0.22043180465698242
-req_cs
-att_cs,0.11968612670898438
-cs,0.22524785995483398
-cs,0.15757369995117188
-req_cs
-cs,0.29907751083374023
-req_cs
-att_cs,0.07098793983459473
-req_cs
-att_cs,0.10820150375366211
-att_cs,0.13082504272460938
-cs,0.14183640480041504
-cs,0.27659082412719727
-req_cs
-req_cs
-att_cs,0.12967157363891602
-att_cs,0.06463980674743652
-cs,0.15538978576660156
-req_cs
-att_cs,0.09398555755615234
-cs,0.10569429397583008
-req_cs
-att_cs,0.14069628715515137
-cs,0.2349081039428711
-req_cs
-cs,0.18260979652404785
-att_cs,0.05402088165283203
-cs,0.30104851722717285
-cs,0.24284887313842773
-req_cs
-req_cs
-req_cs
-att_cs,0.07926511764526367
-att_cs,0.10323905944824219
-att_cs,0.12332463264465332
-cs,0.22454023361206055
-req_cs
-att_cs,0.1873021125793457
-cs,0.1890087127685547
-req_cs
-att_cs,0.05468606948852539
-cs,0.10985231399536133
-req_cs
-att_cs,0.10937690734863281
-cs,0.23842740058898926
-req_cs
-att_cs,0.04207754135131836
-cs,0.21860218048095703
-cs,0.22397613525390625
-req_cs
-req_cs
-att_cs,0.08566117286682129
-cs,0.16913676261901855
-req_cs
-att_cs,0.08554244041442871
-att_cs,0.1045687198638916
-cs,0.11445116996765137
-req_cs
-att_cs,0.13715076446533203
-cs,0.2511332035064697
-req_cs
-att_cs,0.05294966697692871
-cs,0.2807891368865967
-att_cs,0.07680654525756836
-cs,0.12466287612915039
-req_cs
-cs,0.13224554061889648
-att_cs,0.04398298263549805
-req_cs
-cs,0.27069640159606934
-att_cs,0.0354464054107666
-cs,0.3063080310821533
-req_cs
-att_cs,0.033593177795410156
-cs,0.20109033584594727
-cs,0.18901371955871582
-req_cs
-att_cs,0.031182050704956055
-cs,0.14317989349365234
-req_cs
-att_cs,0.02814030647277832
-cs,0.24874019622802734
-req_cs
-att_cs,0.03389692306518555
-cs,0.24161934852600098
-cs,0.29049158096313477
-req_cs
-att_cs,0.030777454376220703
-cs,0.24246001243591309
-req_cs
-att_cs,0.033301591873168945
-cs,0.2749807834625244
-req_cs
-att_cs,0.028797149658203125
-cs,0.24785995483398438
-cs,0.131730318069458
-req_cs
-att_cs,0.03148913383483887
-cs,0.245147705078125
-req_cs
-att_cs,0.03170061111450195
-cs,0.26186442375183105
-req_cs
-att_cs,0.030768156051635742
-cs,0.2782559394836426
-req_cs
-att_cs,0.029886722564697266
-cs,0.23824238777160645
-req_cs
-att_cs,0.02897477149963379
-cs,0.18072223663330078
+att_cs,0.03615736961364746
+req_cs
+att_cs,0.05689835548400879
+req_cs
+att_cs,0.07629179954528809
+req_cs
+req_cs
+att_cs,0.09842967987060547
+req_cs
+att_cs,0.10390996932983398
+mandato messaggio per uscire
+cs,0.20992255210876465
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.23716974258422852
+mandato messaggio per uscire
+cs,0.23166632652282715
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.23242616653442383
+mandato messaggio per uscire
+cs,0.1583695411682129
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.2353343963623047
+mandato messaggio per uscire
+cs,0.20409941673278809
+ricevuto messaggio per uscire
+req_cs
+mandato messaggio per uscire
+cs,0.2916700839996338
+att_cs,0.31647205352783203
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.19344687461853027
+mandato messaggio per uscire
+cs,0.11546826362609863
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.24032139778137207
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.30188536643981934
+req_cs
+att_cs,0.25539517402648926
+mandato messaggio per uscire
+cs,0.27224206924438477
+mandato messaggio per uscire
+cs,0.13823699951171875
+ricevuto messaggio per uscire
+req_cs
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.23989105224609375
+req_cs
+att_cs,0.2678656578063965
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.24576306343078613
+att_cs,0.1548771858215332
+mandato messaggio per uscire
+cs,0.14972901344299316
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.1874077320098877
+mandato messaggio per uscire
+cs,0.17742681503295898
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.24616646766662598
+mandato messaggio per uscire
+cs,0.26056623458862305
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.2823190689086914
+mandato messaggio per uscire
+cs,0.16283965110778809
+mandato messaggio per uscire
+cs,0.11355876922607422
+ricevuto messaggio per uscire
+req_cs
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.268841028213501
+att_cs,0.19906949996948242
+mandato messaggio per uscire
+cs,0.12258267402648926
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.14699530601501465
+mandato messaggio per uscire
+cs,0.29441070556640625
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.16272306442260742
+mandato messaggio per uscire
+cs,0.12982654571533203
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.1610102653503418
+mandato messaggio per uscire
+cs,0.22727108001708984
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.2807652950286865
+mandato messaggio per uscire
+cs,0.24737095832824707
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.1345517635345459
+req_cs
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.171889066696167
+req_cs
+att_cs,0.22733736038208008
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.22266554832458496
+mandato messaggio per uscire
+cs,0.25217652320861816
+att_cs,0.2208847999572754
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.1354672908782959
+mandato messaggio per uscire
+cs,0.19959640502929688
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.19317197799682617
+mandato messaggio per uscire
+cs,0.2138841152191162
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.3002800941467285
+mandato messaggio per uscire
+cs,0.25592041015625
+mandato messaggio per uscire
+cs,0.21248412132263184
+mandato messaggio per uscire
+cs,0.2911360263824463
+ricevuto messaggio per uscire
+req_cs
+ricevuto messaggio per uscire
+req_cs
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.334531307220459
+att_cs,0.2910933494567871
+att_cs,0.20134592056274414
+mandato messaggio per uscire
+cs,0.1866142749786377
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.1456162929534912
+mandato messaggio per uscire
+cs,0.1288158893585205
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.13118958473205566
+mandato messaggio per uscire
+cs,0.15438413619995117
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.25271081924438477
+mandato messaggio per uscire
+cs,0.13144755363464355
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.28309154510498047
+mandato messaggio per uscire
+cs,0.254361629486084
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.24732089042663574
+mandato messaggio per uscire
+cs,0.22113871574401855
+mandato messaggio per uscire
+cs,0.28364992141723633
+ricevuto messaggio per uscire
+req_cs
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.23608160018920898
+att_cs,0.1353774070739746
+mandato messaggio per uscire
+cs,0.10124468803405762
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.22425365447998047
+mandato messaggio per uscire
+cs,0.27922964096069336
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.2282264232635498
+mandato messaggio per uscire
+cs,0.17154908180236816
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.23269128799438477
+mandato messaggio per uscire
+cs,0.28915929794311523
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.27139759063720703
+mandato messaggio per uscire
+cs,0.2748265266418457
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.1380014419555664
+mandato messaggio per uscire
+cs,0.10611104965209961
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.19700121879577637
+mandato messaggio per uscire
+cs,0.2937467098236084
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.24281811714172363
+mandato messaggio per uscire
+cs,0.23015403747558594
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.258145809173584
+mandato messaggio per uscire
+cs,0.29026055335998535
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.25936341285705566
+mandato messaggio per uscire
+cs,0.23098540306091309
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.1782975196838379
+mandato messaggio per uscire
+cs,0.16329407691955566
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.13577675819396973
+mandato messaggio per uscire
+cs,0.12529826164245605
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.19368577003479004
+mandato messaggio per uscire
+cs,0.26252174377441406
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.24107575416564941
+mandato messaggio per uscire
+cs,0.14978384971618652
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.23517966270446777
+mandato messaggio per uscire
+cs,0.29512667655944824
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.24270367622375488
+mandato messaggio per uscire
+cs,0.27701592445373535
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.19298553466796875
+mandato messaggio per uscire
+cs,0.17702412605285645
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.23566699028015137
+mandato messaggio per uscire
+cs,0.29592227935791016
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.25980186462402344
+mandato messaggio per uscire
+cs,0.26767539978027344
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.2469620704650879
+mandato messaggio per uscire
+cs,0.23089146614074707
+mandato messaggio per uscire
+cs,0.19381475448608398
+ricevuto messaggio per uscire
+req_cs
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.23839950561523438
+att_cs,0.13618779182434082
+mandato messaggio per uscire
+cs,0.11639094352722168
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.1953127384185791
+mandato messaggio per uscire
+cs,0.2783949375152588
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.15516209602355957
+req_cs
+att_cs,0.26259922981262207
+mandato messaggio per uscire
+cs,0.2673499584197998
+ricevuto messaggio per uscire
+req_cs
+mandato messaggio per uscire
+cs,0.19335222244262695
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.2433760166168213
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.28542518615722656
+att_cs,0.19476938247680664
+mandato messaggio per uscire
+cs,0.2414562702178955
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.15405535697937012
+mandato messaggio per uscire
+cs,0.11741495132446289
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.20309853553771973
+mandato messaggio per uscire
+cs,0.10770678520202637
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.20377612113952637
+mandato messaggio per uscire
+cs,0.21843910217285156
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.225266695022583
+mandato messaggio per uscire
+cs,0.22467994689941406
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.12064623832702637
+req_cs
+att_cs,0.1797628402709961
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.16219401359558105
+mandato messaggio per uscire
+cs,0.11910152435302734
+mandato messaggio per uscire
+cs,0.20089459419250488
+ricevuto messaggio per uscire
+req_cs
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.1777637004852295
+att_cs,0.16852831840515137
+mandato messaggio per uscire
+cs,0.1898057460784912
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.14669036865234375
+mandato messaggio per uscire
+cs,0.22948598861694336
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.2721841335296631
+mandato messaggio per uscire
+cs,0.2666206359863281
+ricevuto messaggio per uscire
+req_cs
+mandato messaggio per uscire
+cs,0.15753912925720215
+att_cs,0.26868557929992676
+ricevuto messaggio per uscire
+req_cs
+mandato messaggio per uscire
+cs,0.21921730041503906
+att_cs,0.2803983688354492
+mandato messaggio per uscire
+cs,0.25458574295043945
+ricevuto messaggio per uscire
+req_cs
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.24608230590820312
+att_cs,0.12196707725524902
+mandato messaggio per uscire
+cs,0.14325809478759766
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.21415925025939941
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.24250125885009766
+req_cs
+att_cs,0.21720671653747559
+mandato messaggio per uscire
+cs,0.22872304916381836
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.20473432540893555
+mandato messaggio per uscire
+cs,0.20831584930419922
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.27675867080688477
+mandato messaggio per uscire
+cs,0.13950037956237793
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.16218280792236328
+mandato messaggio per uscire
+cs,0.28542137145996094
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.13888072967529297
+req_cs
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.17000508308410645
+att_cs,0.1496891975402832
+mandato messaggio per uscire
+cs,0.1080484390258789
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.131669282913208
+mandato messaggio per uscire
+cs,0.20568251609802246
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.13998961448669434
+mandato messaggio per uscire
+cs,0.19968056678771973
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.19499874114990234
+mandato messaggio per uscire
+cs,0.19535112380981445
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.234771728515625
+mandato messaggio per uscire
+cs,0.24170279502868652
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.23885178565979004
+mandato messaggio per uscire
+cs,0.24016094207763672
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.2647373676300049
+mandato messaggio per uscire
+cs,0.29607319831848145
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.212052583694458
+mandato messaggio per uscire
+cs,0.22615361213684082
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.2111682891845703
+mandato messaggio per uscire
+cs,0.16747093200683594
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.20020699501037598
+mandato messaggio per uscire
+cs,0.2819979190826416
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.1810169219970703
+mandato messaggio per uscire
+cs,0.11047625541687012
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.18938994407653809
+req_cs
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.18294334411621094
+att_cs,0.15286898612976074
+mandato messaggio per uscire
+cs,0.20289039611816406
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.14927411079406738
+mandato messaggio per uscire
+cs,0.15651535987854004
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.1347334384918213
+mandato messaggio per uscire
+cs,0.27821993827819824
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.1649789810180664
+req_cs
+mandato messaggio per uscire
+cs,0.21249675750732422
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.2671084403991699
+req_cs
+att_cs,0.3117861747741699
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.32890963554382324
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.30109095573425293
+req_cs
+att_cs,0.298264741897583
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.28558826446533203
+att_cs,0.1428511142730713
+mandato messaggio per uscire
+cs,0.10534977912902832
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.24058914184570312
+mandato messaggio per uscire
+cs,0.17969870567321777
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.25426411628723145
+mandato messaggio per uscire
+cs,0.2506275177001953
+mandato messaggio per uscire
+cs,0.22424769401550293
+ricevuto messaggio per uscire
+req_cs
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.29767656326293945
+att_cs,0.26971888542175293
+mandato messaggio per uscire
+cs,0.12301993370056152
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.14681458473205566
+mandato messaggio per uscire
+cs,0.2933156490325928
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.15268445014953613
+mandato messaggio per uscire
+cs,0.1039578914642334
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.17096471786499023
+mandato messaggio per uscire
+cs,0.1305255889892578
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.19893932342529297
+mandato messaggio per uscire
+cs,0.1019282341003418
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.15956401824951172
+mandato messaggio per uscire
+cs,0.2778947353363037
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.1618797779083252
+mandato messaggio per uscire
+cs,0.12703251838684082
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.15230917930603027
+mandato messaggio per uscire
+cs,0.2454376220703125
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.18132448196411133
+mandato messaggio per uscire
+cs,0.22562551498413086
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.2051985263824463
+mandato messaggio per uscire
+cs,0.1141822338104248
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.2140953540802002
+mandato messaggio per uscire
+cs,0.2528982162475586
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.20986056327819824
+mandato messaggio per uscire
+cs,0.2531418800354004
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.21776604652404785
+req_cs
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.20430660247802734
+att_cs,0.13289499282836914
+mandato messaggio per uscire
+cs,0.163330078125
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.1502995491027832
+mandato messaggio per uscire
+cs,0.11161565780639648
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.18472981452941895
+mandato messaggio per uscire
+cs,0.17486786842346191
+ricevuto messaggio per uscire
+req_cs
+mandato messaggio per uscire
+cs,0.12009644508361816
+att_cs,0.1825122833251953
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.2004246711730957
+mandato messaggio per uscire
+cs,0.25902700424194336
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.1381378173828125
+req_cs
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.17205524444580078
+att_cs,0.11720442771911621
+mandato messaggio per uscire
+cs,0.14711904525756836
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.15272259712219238
+mandato messaggio per uscire
+cs,0.21371722221374512
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.2322986125946045
+mandato messaggio per uscire
+cs,0.16868281364440918
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.22357797622680664
+mandato messaggio per uscire
+cs,0.19549059867858887
+mandato messaggio per uscire
+cs,0.24593114852905273
+ricevuto messaggio per uscire
+req_cs
+ricevuto messaggio per uscire
+att_cs,0.24876189231872559
+att_cs,0.20207905769348145
+mandato messaggio per uscire
+cs,0.12142705917358398
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.1511237621307373
+mandato messaggio per uscire
+cs,0.28242945671081543
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.16554617881774902
+mandato messaggio per uscire
+cs,0.15160799026489258
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.1778717041015625
+mandato messaggio per uscire
+cs,0.1027674674987793
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.12340116500854492
+mandato messaggio per uscire
+cs,0.19182872772216797
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.10651445388793945
+mandato messaggio per uscire
+cs,0.102935791015625
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.13964366912841797
+mandato messaggio per uscire
+cs,0.15996313095092773
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.1240530014038086
+mandato messaggio per uscire
+cs,0.2947225570678711
+mandato messaggio per uscire
+cs,0.1349327564239502
+ricevuto messaggio per uscire
+req_cs
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.10432267189025879
+req_cs
+att_cs,0.12959027290344238
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.08856821060180664
+att_cs,0.08601760864257812
+mandato messaggio per uscire
+cs,0.11222696304321289
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.19811439514160156
+mandato messaggio per uscire
+cs,0.279005765914917
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.238114595413208
+mandato messaggio per uscire
+cs,0.28600168228149414
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.2566545009613037
+mandato messaggio per uscire
+cs,0.25998735427856445
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.2884643077850342
+req_cs
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.138869047164917
+att_cs,0.11473298072814941
+mandato messaggio per uscire
+cs,0.1444237232208252
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.12175798416137695
+mandato messaggio per uscire
+cs,0.11317086219787598
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.15250349044799805
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.2547261714935303
+mandato messaggio per uscire
+cs,0.21807050704956055
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.18843698501586914
+att_cs,0.153120756149292
+mandato messaggio per uscire
+cs,0.2519495487213135
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.16417527198791504
+mandato messaggio per uscire
+cs,0.16998052597045898
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.258420467376709
+req_cs
+att_cs,0.15712308883666992
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.056426286697387695
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.1849079132080078
+req_cs
+att_cs,0.058208465576171875
+mandato messaggio per uscire
+cs,0.2117013931274414
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.09396505355834961
+mandato messaggio per uscire
+cs,0.15894007682800293
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.15272092819213867
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.13962101936340332
+mandato messaggio per uscire
+cs,0.22641301155090332
+req_cs
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.16016530990600586
+att_cs,0.05168652534484863
+mandato messaggio per uscire
+cs,0.2790360450744629
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.052307844161987305
+mandato messaggio per uscire
+cs,0.22594809532165527
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.08663582801818848
+mandato messaggio per uscire
+cs,0.20446372032165527
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.16187000274658203
+req_cs
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.1540355682373047
+att_cs,0.13657855987548828
+mandato messaggio per uscire
+cs,0.1754443645477295
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.1411912441253662
+req_cs
+ricevuto messaggio per uscire
+att_cs,0.06634521484375
+att_cs,0.07733559608459473
+mandato messaggio per uscire
+cs,0.21327519416809082
+ricevuto messaggio per uscire
+att_cs,0.05135965347290039
+mandato messaggio per uscire
+cs,0.21568083763122559
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.03685641288757324
+mandato messaggio per uscire
+cs,0.1906278133392334
+ricevuto messaggio per uscire
+req_cs
+mandato messaggio per uscire
+cs,0.2787199020385742
+mandato messaggio per uscire
+cs,0.2267007827758789
+ricevuto messaggio per uscire
+req_cs
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.02538895606994629
+att_cs,0.04810023307800293
+att_cs,0.05776858329772949
+mandato messaggio per uscire
+cs,0.2787179946899414
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.024882793426513672
+mandato messaggio per uscire
+cs,0.10448980331420898
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.03438711166381836
+mandato messaggio per uscire
+cs,0.12969541549682617
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.018513917922973633
+mandato messaggio per uscire
+cs,0.17882633209228516
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.019920825958251953
+mandato messaggio per uscire
+cs,0.2781538963317871
+mandato messaggio per uscire
+cs,0.23430418968200684
+ricevuto messaggio per uscire
+req_cs
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.0341646671295166
+att_cs,0.044684648513793945
+mandato messaggio per uscire
+cs,0.27561450004577637
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.03607058525085449
+mandato messaggio per uscire
+cs,0.2807157039642334
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.2508509159088135
+mandato messaggio per uscire
+cs,0.20655059814453125
+req_cs
+ricevuto messaggio per uscire
+req_cs
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.04262042045593262
+att_cs,0.051560163497924805
+att_cs,0.06264352798461914
+mandato messaggio per uscire
+cs,0.27419281005859375
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.02613377571105957
+mandato messaggio per uscire
+cs,0.10621786117553711
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.12955856323242188
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.02920246124267578
+mandato messaggio per uscire
+cs,0.19951248168945312
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.023619651794433594
+mandato messaggio per uscire
+cs,0.269589900970459
+ricevuto messaggio per uscire
+req_cs
+mandato messaggio per uscire
+cs,0.11869668960571289
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.024480819702148438
+att_cs,0.029567480087280273
+mandato messaggio per uscire
+cs,0.28951048851013184
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.020929336547851562
+mandato messaggio per uscire
+cs,0.20458126068115234
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.023212194442749023
+mandato messaggio per uscire
+cs,0.18903279304504395
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.024231910705566406
+mandato messaggio per uscire
+cs,0.27411675453186035
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.24226999282836914
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.02069711685180664
+mandato messaggio per uscire
+cs,0.11157870292663574
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.018103837966918945
+mandato messaggio per uscire
+cs,0.1382462978363037
+ricevuto messaggio per uscire
+req_cs
+mandato messaggio per uscire
+cs,0.29102516174316406
+ricevuto messaggio per uscire
+att_cs,0.03000783920288086
+mandato messaggio per uscire
+cs,0.20121479034423828
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.03769207000732422
+mandato messaggio per uscire
+cs,0.2921898365020752
+ricevuto messaggio per uscire
+req_cs
+mandato messaggio per uscire
+cs,0.1758739948272705
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.020655393600463867
+att_cs,0.03212618827819824
+mandato messaggio per uscire
+cs,0.14538049697875977
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.0476686954498291
+mandato messaggio per uscire
+cs,0.27552175521850586
+ricevuto messaggio per uscire
+req_cs
+mandato messaggio per uscire
+cs,0.11996984481811523
+att_cs,0.03926515579223633
+ricevuto messaggio per uscire
+mandato messaggio per uscire
+cs,0.25029945373535156
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.020824432373046875
+mandato messaggio per uscire
+cs,0.16925740242004395
+ricevuto messaggio per uscire
+req_cs
+att_cs,0.04258227348327637
+mandato messaggio per uscire
+cs,0.16358447074890137
+ricevuto messaggio per uscire
 ho fatto i join
-in totale sono stai inviati 4869 messaggi
+in totale sono stai inviati 4804 messaggi
